@@ -250,7 +250,7 @@
         .prompt-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            gap: 16px;
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 40px 60px;
@@ -262,158 +262,136 @@
             border-radius: var(--radius);
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
         }
 
         .prompt-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-2px);
             box-shadow: var(--shadow-hover);
             border-color: transparent;
         }
 
         .card-image {
             width: 100%;
-            height: auto;
-            aspect-ratio: auto;
+            aspect-ratio: 16/10;
+            object-fit: cover;
             display: block;
             background: linear-gradient(135deg, #f0f0f3, #e0e0e0);
         }
 
         .card-body {
-            padding: 16px;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
+            padding: 12px;
         }
 
         .card-category {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 10px;
+            display: inline-block;
+            padding: 2px 8px;
             background: rgba(99, 102, 241, 0.1);
-            border-radius: 50px;
-            font-size: 0.75rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
             font-weight: 500;
             color: var(--primary);
+            margin-bottom: 6px;
         }
 
         .card-title {
-            font-size: 1rem;
+            font-size: 0.875rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: var(--text-primary);
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+        }
+
+        .card-meta-row span {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .card-meta-row .industry { color: var(--secondary); }
+        .card-meta-row .source { color: var(--primary); }
+        .card-meta-row .click-rate { color: var(--success); }
+
+        .card-stars {
+            display: flex;
+            gap: 1px;
+        }
+
+        .card-stars i {
+            width: 10px;
+            height: 10px;
+            color: var(--star);
+        }
+
+        .card-stars i.empty {
+            color: var(--border);
         }
 
         .card-text {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
             color: var(--text-secondary);
-            line-height: 1.7;
+            line-height: 1.5;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            margin-bottom: 8px;
         }
 
         .card-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 12px;
+            gap: 4px;
         }
 
         .card-tag {
-            padding: 3px 8px;
+            padding: 2px 6px;
             background: var(--bg);
-            border-radius: 4px;
-            font-size: 0.7rem;
+            border-radius: 3px;
+            font-size: 0.65rem;
             color: var(--text-tertiary);
-        }
-
-        /* Meta Grid */
-        .card-meta {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 14px;
-            padding-top: 14px;
-            border-top: 1px solid var(--border);
-        }
-
-        .meta-item {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .meta-label {
-            font-size: 0.7rem;
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .meta-value {
-            font-size: 0.8125rem;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .meta-value.industry { color: var(--secondary); }
-        .meta-value.source { color: var(--primary); }
-        .meta-value.click-rate { color: var(--success); }
-
-        .star-rating {
-            display: flex;
-            gap: 2px;
-        }
-
-        .star-rating i {
-            width: 14px;
-            height: 14px;
-            color: var(--star);
-        }
-
-        .star-rating i.empty {
-            color: var(--border);
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 14px;
-            padding-top: 14px;
-            border-top: 1px solid var(--border);
         }
 
         .copy-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
+            width: 100%;
+            margin-top: 10px;
+            padding: 8px;
             background: var(--bg);
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 0.8125rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.8rem;
             font-weight: 500;
             color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         .copy-btn:hover {
             background: var(--primary);
+            border-color: var(--primary);
             color: white;
         }
 
         .copy-btn.copied {
             background: var(--success);
+            border-color: var(--success);
             color: white;
         }
 
@@ -1274,7 +1252,7 @@
             let stars = '';
             for (let i = 1; i <= 5; i++) {
                 if (i <= rating) {
-                    stars += `<i data-lucide="star" style="fill:#FBBF24;"></i>`;
+                    stars += `<i data-lucide="star"></i>`;
                 } else {
                     stars += `<i data-lucide="star" class="empty"></i>`;
                 }
@@ -1309,39 +1287,25 @@
                     <img class="card-image" src="${prompt.image || 'https://picsum.photos/800/500?grayscale'}" alt="${prompt.title}"
                          onerror="this.src='https://picsum.photos/800/500?grayscale'">
                     <div class="card-body">
-                        <div class="card-header">
-                            <span class="card-category">${CATEGORY_NAMES[prompt.category] || prompt.category}</span>
-                        </div>
+                        <span class="card-category">${CATEGORY_NAMES[prompt.category] || prompt.category}</span>
                         <h3 class="card-title">${prompt.title}</h3>
+                        <div class="card-meta-row">
+                            <span class="industry">${prompt.industry || '-'}</span>
+                            <span>·</span>
+                            <span class="source">${prompt.source || '-'}</span>
+                            <span>·</span>
+                            <span class="click-rate">${prompt.clickRate || '-'}</span>
+                            <span>·</span>
+                            <span class="card-stars">${renderStars(prompt.rating || 0)}</span>
+                        </div>
                         <div class="card-text">${prompt.text}</div>
                         <div class="card-tags">
                             ${(prompt.tags || []).map(tag => `<span class="card-tag">#${tag}</span>`).join('')}
                         </div>
-                        <div class="card-meta">
-                            <div class="meta-item">
-                                <span class="meta-label">行业</span>
-                                <span class="meta-value industry">${prompt.industry || '-'}</span>
-                            </div>
-                            <div class="meta-item">
-                                <span class="meta-label">来源</span>
-                                <span class="meta-value source">${prompt.source || '-'}</span>
-                            </div>
-                            <div class="meta-item">
-                                <span class="meta-label">点击率</span>
-                                <span class="meta-value click-rate">${prompt.clickRate || '-'}</span>
-                            </div>
-                            <div class="meta-item">
-                                <span class="meta-label">星级</span>
-                                <div class="star-rating">${renderStars(prompt.rating || 0)}</div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <div></div>
-                            <button class="copy-btn" onclick="event.stopPropagation(); copyPrompt(${prompt.id})">
-                                <i data-lucide="copy" style="width:14px;height:14px;"></i>
-                                复制
-                            </button>
-                        </div>
+                        <button class="copy-btn" onclick="event.stopPropagation(); copyPrompt(${prompt.id})">
+                            <i data-lucide="copy" style="width:14px;height:14px;"></i>
+                            复制提示词
+                        </button>
                     </div>
                 </article>
             `).join('');
