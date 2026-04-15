@@ -248,9 +248,9 @@
         /* Prompt Grid */
         .prompt-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
-            max-width: 1200px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -272,8 +272,9 @@
 
         .prompt-image {
             width: 100%;
-            aspect-ratio: 16/10;
-            object-fit: cover;
+            height: auto;
+            aspect-ratio: auto;
+            display: block;
             background: linear-gradient(135deg, #1a1a2e, #2d2d4a);
         }
 
@@ -367,6 +368,59 @@
             border-radius: 4px;
             font-size: 0.7rem;
             color: var(--text-secondary);
+        }
+
+        .prompt-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .meta-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .meta-value {
+            font-size: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .meta-value.industry {
+            color: var(--secondary);
+        }
+
+        .meta-value.source {
+            color: var(--primary);
+        }
+
+        .meta-value.click-rate {
+            color: #22c55e;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star-rating i {
+            width: 12px;
+            height: 12px;
+            color: #fbbf24;
+        }
+
+        .star-rating i.empty {
+            color: rgba(255, 255, 255, 0.15);
         }
 
         /* Toast */
@@ -672,7 +726,19 @@
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 1200px) {
+            .prompt-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .prompt-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
             .prompt-grid {
                 grid-template-columns: 1fr;
             }
@@ -801,6 +867,33 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>行业</label>
+                                <input type="text" id="addIndustry" placeholder="如：建筑设计">
+                            </div>
+                            <div class="form-group">
+                                <label>来源</label>
+                                <input type="text" id="addSource" placeholder="如：Midjourney">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>点击率</label>
+                                <input type="text" id="addClickRate" placeholder="如：8.5%">
+                            </div>
+                            <div class="form-group">
+                                <label>星级 (1-5)</label>
+                                <select id="addRating">
+                                    <option value="">选择星级</option>
+                                    <option value="1">1星</option>
+                                    <option value="2">2星</option>
+                                    <option value="3">3星</option>
+                                    <option value="4">4星</option>
+                                    <option value="5">5星</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label>提示词内容 (英文效果更佳)</label>
                             <textarea id="addText" placeholder="输入AI绘图提示词..." required></textarea>
@@ -838,6 +931,32 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>行业</label>
+                                <input type="text" id="editIndustry" placeholder="如：建筑设计">
+                            </div>
+                            <div class="form-group">
+                                <label>来源</label>
+                                <input type="text" id="editSource" placeholder="如：Midjourney">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>点击率</label>
+                                <input type="text" id="editClickRate" placeholder="如：8.5%">
+                            </div>
+                            <div class="form-group">
+                                <label>星级 (1-5)</label>
+                                <select id="editRating">
+                                    <option value="1">1星</option>
+                                    <option value="2">2星</option>
+                                    <option value="3">3星</option>
+                                    <option value="4">4星</option>
+                                    <option value="5">5星</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label>提示词内容</label>
                             <textarea id="editText" required></textarea>
@@ -871,6 +990,10 @@
                 id: 1,
                 title: "赛博朋克都市夜景",
                 category: "photorealistic",
+                industry: "建筑设计",
+                source: "Midjourney",
+                clickRate: "8.2%",
+                rating: 5,
                 image: "https://images.unsplash.com/photo-1480796927426-f609979314bd?w=800&h=500&fit=crop",
                 text: "Cyberpunk cityscape at night, neon-lit skyscrapers, rain-soaked streets, futuristic vehicles, holographic advertisements, cinematic lighting, shot on Sony A7R IV, 35mm lens, f/1.8, ISO 3200",
                 tags: ["夜景", "霓虹", "未来城市"]
@@ -879,6 +1002,10 @@
                 id: 2,
                 title: "宫崎骏风格夏日乡村",
                 category: "anime",
+                industry: "动画制作",
+                source: "Midjourney",
+                clickRate: "9.1%",
+                rating: 5,
                 image: "https://images.unsplash.com/photo-1528164344705-47542687000d?w=800&h=500&fit=crop",
                 text: "Studio Ghibli style, peaceful countryside in summer, traditional Japanese house, rice fields, distant mountains, warm golden hour lighting, floating fireflies, detailed background art, peaceful atmosphere",
                 tags: ["吉卜力", "夏天", "治愈"]
@@ -887,6 +1014,10 @@
                 id: 3,
                 title: "未来数字少女",
                 category: "digital",
+                industry: "游戏设计",
+                source: "DALL-E",
+                clickRate: "7.5%",
+                rating: 4,
                 image: "https://images.unsplash.com/photo-1535378620166-273708d44e4c?w=800&h=500&fit=crop",
                 text: "Digital art portrait of a futuristic girl, holographic accessories, flowing silver hair, iridescent eyes, cyberpunk fashion, glowing circuits on skin, ethereal glow, ultra detailed, 8k resolution",
                 tags: ["数字人", "科幻", "portrait"]
@@ -895,6 +1026,10 @@
                 id: 4,
                 title: "水彩花卉组合",
                 category: "illustration",
+                industry: "平面设计",
+                source: "Stable Diffusion",
+                clickRate: "6.3%",
+                rating: 4,
                 image: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=800&h=500&fit=crop",
                 text: "Watercolor illustration of a bouquet of wildflowers, soft pastel colors, delicate petals, botanical details, white background, visible brushstrokes, artistic style, high quality watercolor paper texture",
                 tags: ["水彩", "花卉", "小清新"]
@@ -903,6 +1038,10 @@
                 id: 5,
                 title: "蒸汽朋克飞行器",
                 category: "concept",
+                industry: "工业设计",
+                source: "Midjourney",
+                clickRate: "8.8%",
+                rating: 5,
                 image: "https://images.unsplash.com/photo-1534996683340-e988a40be48e?w=800&h=500&fit=crop",
                 text: "Steampunk airship concept art, brass and copper machinery, Victorian era technology, ornate details, floating in cloudy sky, dramatic sunset lighting, detailed engineering blueprints aesthetic",
                 tags: ["蒸汽朋克", "飞行器", "维多利亚"]
@@ -911,6 +1050,10 @@
                 id: 6,
                 title: "极光几何抽象",
                 category: "abstract",
+                industry: "艺术创作",
+                source: "DALL-E",
+                clickRate: "5.9%",
+                rating: 4,
                 image: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800&h=500&fit=crop",
                 text: "Abstract art with flowing aurora borealis patterns, geometric shapes intertwined with organic curves, gradient from deep purple to cyan and green, minimalist composition, museum quality print",
                 tags: ["极光", "几何", "极简"]
@@ -919,6 +1062,10 @@
                 id: 7,
                 title: "日落海滩肖像",
                 category: "photorealistic",
+                industry: "摄影",
+                source: "Midjourney",
+                clickRate: "8.4%",
+                rating: 5,
                 image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=500&fit=crop",
                 text: "Photorealistic portrait of a woman on tropical beach at sunset, golden hour lighting, wind blown hair, crystal clear turquoise water, coconut trees, shot with Canon EOS R5, 85mm f/1.4",
                 tags: ["海滩", "日落", "人像"]
@@ -927,6 +1074,10 @@
                 id: 8,
                 title: "新海诚风格雨日",
                 category: "anime",
+                industry: "动画制作",
+                source: "Stable Diffusion",
+                clickRate: "7.2%",
+                rating: 4,
                 image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=500&fit=crop",
                 text: "Makoto Shinkai style, rain falling on city streets at night, reflections on wet pavement, warm street lamps, distant skyscrapers, girl with umbrella silhouette, ultra detailed backgrounds",
                 tags: ["新海诚", "雨天", "城市"]
@@ -935,6 +1086,10 @@
                 id: 9,
                 title: "暗黑天使概念",
                 category: "digital",
+                industry: "游戏设计",
+                source: "Midjourney",
+                clickRate: "6.7%",
+                rating: 4,
                 image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&h=500&fit=crop",
                 text: "Dark angel character concept art, broken halo, torn wings revealing mechanical bones, gothic armor, dramatic rim lighting, dark fantasy art style, ultra detailed digital painting",
                 tags: ["天使", "暗黑", "角色设计"]
@@ -943,6 +1098,10 @@
                 id: 10,
                 title: "扁平化城市插画",
                 category: "illustration",
+                industry: "UI设计",
+                source: "DALL-E",
+                clickRate: "5.4%",
+                rating: 3,
                 image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=500&fit=crop",
                 text: "Flat design illustration of a modern city skyline, geometric buildings, pastel sunset gradient sky, minimal style, vector art, clean lines, popular on Dribbble, 4k resolution",
                 tags: ["扁平", "城市", "矢量"]
@@ -951,6 +1110,10 @@
                 id: 11,
                 title: "废墟太空站",
                 category: "concept",
+                industry: "影视制作",
+                source: "Midjourney",
+                clickRate: "7.9%",
+                rating: 5,
                 image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800&h=500&fit=crop",
                 text: "Abandoned space station concept art, derelict spacecraft, alien planet visible through broken windows, dust particles floating in moonlight, volumetric fog, sci-fi environment art",
                 tags: ["太空", "废墟", "科幻"]
@@ -959,6 +1122,10 @@
                 id: 12,
                 title: "分形宇宙漩涡",
                 category: "abstract",
+                industry: "艺术创作",
+                source: "DALL-E",
+                clickRate: "4.8%",
+                rating: 4,
                 image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&h=500&fit=crop",
                 text: "Abstract fractal art, infinite recursive patterns, mandala-like vortex, cosmic scale, deep blacks with vibrant neon accents, hypnotic detail, mathematically precise",
                 tags: ["分形", "曼陀罗", "宇宙"]
@@ -967,6 +1134,10 @@
                 id: 13,
                 title: "复古胶片咖啡馆",
                 category: "photorealistic",
+                industry: "摄影",
+                source: "Stable Diffusion",
+                clickRate: "6.5%",
+                rating: 4,
                 image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&h=500&fit=crop",
                 text: "Vintage film photography of a cozy coffee shop interior, warm tungsten lighting, exposed brick walls, wooden furniture, steam rising from coffee cups, shot on Kodak Portra 400, grain visible",
                 tags: ["咖啡馆", "复古", "胶片"]
@@ -975,6 +1146,10 @@
                 id: 14,
                 title: "异世界传送门",
                 category: "anime",
+                industry: "游戏设计",
+                source: "Midjourney",
+                clickRate: "8.6%",
+                rating: 5,
                 image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=500&fit=crop",
                 text: "Anime style portal to another world, swirling magical vortex, glowing runes, mysterious forest on the other side, starlight reflections, fantasy adventure manga cover art style",
                 tags: ["魔法", "传送门", "异世界"]
@@ -983,6 +1158,10 @@
                 id: 15,
                 title: "赛博格机械手臂",
                 category: "digital",
+                industry: "产品设计",
+                source: "DALL-E",
+                clickRate: "7.1%",
+                rating: 4,
                 image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=500&fit=crop",
                 text: "Hyperrealistic cyberpunk prosthetic arm, exposed mechanical joints, synthetic skin interface, LED indicators, chrome and titanium materials, dramatic product photography lighting",
                 tags: ["赛博格", "机械", "义体"]
@@ -991,6 +1170,10 @@
                 id: 16,
                 title: "和风妖怪浮世绘",
                 category: "illustration",
+                industry: "文创设计",
+                source: "Stable Diffusion",
+                clickRate: "7.3%",
+                rating: 5,
                 image: "https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=800&h=500&fit=crop",
                 text: "Japanese ukiyo-e style illustration of mythical yokai spirits, traditional woodblock print aesthetic, mount fuji background, cherry blossoms, ghostly apparition, Edo period art revival",
                 tags: ["浮世绘", "妖怪", "和风"]
@@ -999,6 +1182,10 @@
                 id: 17,
                 title: "深海潜水艇内部",
                 category: "concept",
+                industry: "影视制作",
+                source: "Midjourney",
+                clickRate: "6.9%",
+                rating: 4,
                 image: "https://images.unsplash.com/photo-1551244072-5d12893278ab?w=800&h=500&fit=crop",
                 text: "Interior concept art of a submarine control room, vintage nautical equipment, analog gauges, flickering emergency lights, porthole showing deep ocean darkness, dramatic chiaroscuro lighting",
                 tags: ["潜水艇", "深海", "复古科幻"]
@@ -1007,6 +1194,10 @@
                 id: 18,
                 title: "液态金属变形",
                 category: "abstract",
+                industry: "艺术创作",
+                source: "DALL-E",
+                clickRate: "5.1%",
+                rating: 3,
                 image: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=800&h=500&fit=crop",
                 text: "Abstract visualization of liquid metal morphing, mercury-like surface, reflective chrome, morphing organic shapes, dark background, high contrast, minimalist composition",
                 tags: ["液态", "金属", "变形"]
@@ -1015,6 +1206,10 @@
                 id: 19,
                 title: "野生动物特写",
                 category: "photorealistic",
+                industry: "摄影",
+                source: "Midjourney",
+                clickRate: "8.0%",
+                rating: 5,
                 image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&h=500&fit=crop",
                 text: "Wild lion portrait close-up, golden savanna background, intense eyes, detailed mane texture, natural warm lighting, captured with 600mm telephoto lens, wildlife photography award style",
                 tags: ["狮子", "野生动物", "自然"]
@@ -1023,6 +1218,10 @@
                 id: 20,
                 title: "樱花树下的猫",
                 category: "anime",
+                industry: "动漫制作",
+                source: "Stable Diffusion",
+                clickRate: "9.4%",
+                rating: 5,
                 image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&h=500&fit=crop",
                 text: "Anime illustration of a fluffy cat sitting under a blooming cherry blossom tree, falling petals, soft pink and white color palette, kawaii style, Studio Ghibli influenced, peaceful spring scene",
                 tags: ["猫", "樱花", "可爱"]
@@ -1059,7 +1258,9 @@
                 const matchesSearch = searchQuery === '' ||
                     prompt.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                     prompt.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    (prompt.tags && prompt.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())));
+                    (prompt.tags && prompt.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))) ||
+                    (prompt.industry && prompt.industry.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                    (prompt.source && prompt.source.toLowerCase().includes(searchQuery.toLowerCase()));
                 return matchesFilter && matchesSearch;
             });
 
@@ -1090,11 +1291,43 @@
                         <div class="prompt-tags">
                             ${(prompt.tags || []).map(tag => `<span class="prompt-tag">#${tag}</span>`).join('')}
                         </div>
+                        <div class="prompt-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">行业</span>
+                                <span class="meta-value industry">${prompt.industry || '-'}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">来源</span>
+                                <span class="meta-value source">${prompt.source || '-'}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">点击率</span>
+                                <span class="meta-value click-rate">${prompt.clickRate || '-'}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">星级</span>
+                                <div class="star-rating">
+                                    ${renderStars(prompt.rating || 0)}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </article>
             `).join('');
 
             lucide.createIcons();
+        }
+
+        function renderStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += `<i data-lucide="star" style="fill:#fbbf24;"></i>`;
+                } else {
+                    stars += `<i data-lucide="star" class="empty"></i>`;
+                }
+            }
+            return stars;
         }
 
         function copyPrompt(id) {
@@ -1181,6 +1414,10 @@
             document.getElementById('editImage').value = prompt.image || '';
             document.getElementById('editTitle').value = prompt.title;
             document.getElementById('editCategory').value = prompt.category;
+            document.getElementById('editIndustry').value = prompt.industry || '';
+            document.getElementById('editSource').value = prompt.source || '';
+            document.getElementById('editClickRate').value = prompt.clickRate || '';
+            document.getElementById('editRating').value = prompt.rating || '';
             document.getElementById('editText').value = prompt.text;
             document.getElementById('editTags').value = (prompt.tags || []).join(', ');
         }
@@ -1204,6 +1441,10 @@
                 id: Date.now(),
                 title: document.getElementById('addTitle').value,
                 category: document.getElementById('addCategory').value,
+                industry: document.getElementById('addIndustry').value,
+                source: document.getElementById('addSource').value,
+                clickRate: document.getElementById('addClickRate').value,
+                rating: parseInt(document.getElementById('addRating').value) || 0,
                 image: document.getElementById('addImage').value,
                 text: document.getElementById('addText').value,
                 tags: document.getElementById('addTags').value.split(',').map(t => t.trim()).filter(t => t)
@@ -1228,6 +1469,10 @@
                 id: id,
                 title: document.getElementById('editTitle').value,
                 category: document.getElementById('editCategory').value,
+                industry: document.getElementById('editIndustry').value,
+                source: document.getElementById('editSource').value,
+                clickRate: document.getElementById('editClickRate').value,
+                rating: parseInt(document.getElementById('editRating').value) || 0,
                 image: document.getElementById('editImage').value,
                 text: document.getElementById('editText').value,
                 tags: document.getElementById('editTags').value.split(',').map(t => t.trim()).filter(t => t)
