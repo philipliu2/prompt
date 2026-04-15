@@ -1248,25 +1248,8 @@
                 createdAt: Date.now()
             };
 
-            // Get image dimensions if available
-            if (imgUrl && !imgUrl.startsWith('data:')) {
-                const img = new Image();
-                img.onload = () => {
-                    newPrompt.imageWidth = img.width;
-                    newPrompt.imageHeight = img.height;
-                    prompts.unshift(newPrompt);
-                    savePrompts();
-                    renderPrompts();
-                    e.target.reset();
-                    document.getElementById('addImageArea').innerHTML = `<div class="image-upload-text"><i data-lucide="image-plus" style="width:32px;height:32px;"></i></div><div class="image-upload-text">点击上传 / 粘贴图片 / 输入URL</div><div class="image-upload-hint">支持 JPG, PNG 或图片链接</div>`;
-                    document.getElementById('addImageArea').classList.remove('has-image');
-                    lucide.createIcons();
-                    showToast('添加成功');
-                    switchTab('list');
-                    renderAdminList();
-                };
-                img.src = imgUrl;
-            } else {
+            // Helper to save and reset form
+            function saveAndReset() {
                 prompts.unshift(newPrompt);
                 savePrompts();
                 renderPrompts();
@@ -1278,6 +1261,23 @@
                 switchTab('list');
                 renderAdminList();
             }
+
+            // Get image dimensions if available (don't block saving)
+            if (imgUrl && !imgUrl.startsWith('data:')) {
+                const img = new Image();
+                img.onload = () => {
+                    newPrompt.imageWidth = img.width;
+                    newPrompt.imageHeight = img.height;
+                    savePrompts(); // Update with dimensions
+                };
+                img.onerror = () => {
+                    console.warn('图片加载失败，使用默认尺寸');
+                };
+                img.src = imgUrl;
+            }
+
+            // Save immediately, don't wait for image
+            saveAndReset();
         });
 
         document.getElementById('editForm').addEventListener('submit', (e) => {
