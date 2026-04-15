@@ -621,7 +621,17 @@
             provider: 'deepseek',
             apiKey: 'sk-a378d1bc659f458a95f2c15c46fc0ad3',
             model: 'deepseek-chat',
-            baseUrl: 'https://api.deepseek.com/v1'
+            baseUrl: 'https://api.deepseek.com/v1',
+            prompts: {
+                generateTags: `你是一个AI绘图标签专家。根据用户提供的提示词，生成5-8个相关的中文标签。
+标签要简洁、有吸引力、适合作为设计平台的标签。
+直接返回标签，用逗号分隔，不需要解释。`,
+                optimizePrompt: `你是一个AI绘图提示词优化专家。将用户提供的提示词进行结构化精简：
+1. 保留核心关键词和风格描述
+2. 去除冗余词汇和重复内容
+3. 用中文返回精炼的提示词
+直接返回优化结果，不需要解释。`
+            }
         };
 
         const CATEGORY_NAMES = {
@@ -1168,7 +1178,7 @@
 
             try {
                 const messages = [
-                    { role: 'system', content: '你是一个AI绘图标签专家。根据用户提供的提示词，生成5-8个相关的中文标签。标签要简洁、有吸引力、适合作为小红书或设计平台的标签。直接返回标签，用逗号分隔，不需要解释。' },
+                    { role: 'system', content: AI_CONFIG.prompts.generateTags },
                     { role: 'user', content: `根据这个提示词生成标签：${text}` }
                 ];
 
@@ -1199,7 +1209,7 @@
 
             try {
                 const messages = [
-                    { role: 'system', content: '你是一个AI绘图提示词优化专家。将用户提供的提示词进行结构化精简，保留核心关键词和风格描述，去除冗余词汇，生成更精炼、更适合AI绘图的提示词。用中文返回，直接返回优化后的提示词，不需要解释。' },
+                    { role: 'system', content: AI_CONFIG.prompts.optimizePrompt },
                     { role: 'user', content: `优化这个提示词：${text}` }
                 ];
 
