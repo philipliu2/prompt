@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PromptWorld - 文生图提示词分享站</title>
-    <meta name="description" content="精选文生图提示词库，助力AI绘图创作">
+    <title>PromptWorld - AI提示词库</title>
+    <meta name="description" content="精选AI文生图提示词库，助力Midjourney、Stable Diffusion创作">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         *, *::before, *::after {
@@ -17,366 +17,332 @@
         }
 
         :root {
-            --primary: #6366f1;
-            --secondary: #ec4899;
-            --bg: #0f0f23;
-            --card-bg: #1a1a2e;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
-            --gradient: linear-gradient(135deg, #6366f1, #ec4899);
-            --glow: 0 0 20px rgba(99, 102, 241, 0.3);
+            --bg: #F0F0F3;
+            --card-bg: #FFFFFF;
+            --card-hover: #FAFAFA;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-tertiary: #999999;
+            --border: #E5E5E5;
+            --primary: #6366F1;
+            --primary-hover: #4F46E5;
+            --secondary: #EC4899;
+            --success: #22C55E;
+            --warning: #F59E0B;
+            --star: #FBBF24;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0F0F0F;
+            --card-bg: #1A1A1A;
+            --card-hover: #242424;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+            --text-tertiary: #666666;
+            --border: #2A2A2A;
+            --shadow: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.5);
         }
 
         body {
-            font-family: 'Noto Sans SC', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text-primary);
             min-height: 100vh;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* Header */
         .header {
-            position: fixed;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            padding: 16px 24px;
-            background: rgba(15, 15, 35, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 100;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
+            height: 64px;
         }
 
-        .header-logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .admin-btn {
+        .logo {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            background: rgba(99, 102, 241, 0.15);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 8px;
-            color: var(--primary);
-            font-size: 0.875rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
         }
 
-        .admin-btn:hover {
-            background: var(--primary);
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
         }
 
-        /* Hero Section */
-        .hero {
-            min-height: 50vh;
+        .header-actions {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: var(--border);
+            color: var(--text-primary);
+        }
+
+        /* Hero */
+        .hero {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 60px 40px;
             text-align: center;
-            padding: 120px 20px 60px;
-            background: radial-gradient(ellipse at top, #1a1a3e 0%, var(--bg) 70%);
-            position: relative;
-            overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 70%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-5%, -5%) rotate(5deg); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
+        .hero-inner {
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-size: 2.5rem;
             font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             letter-spacing: -0.02em;
         }
 
         .hero p {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            font-size: 1.125rem;
             color: var(--text-secondary);
-            max-width: 600px;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(99, 102, 241, 0.15);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 50px;
-            font-size: 0.875rem;
-            color: var(--primary);
-            margin-bottom: 24px;
-        }
-
-        .stats {
+        .hero-stats {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
+            gap: 48px;
         }
 
-        .stat-item {
+        .stat {
             text-align: center;
         }
 
         .stat-value {
-            font-size: 2rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary);
         }
 
         .stat-label {
             font-size: 0.875rem;
-            color: var(--text-secondary);
+            color: var(--text-tertiary);
         }
 
-        /* Search & Filter */
+        /* Controls */
         .controls {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 32px 40px;
+        }
+
+        .controls-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .search-box {
             position: relative;
-            max-width: 500px;
-            margin: 0 auto 30px;
+            flex: 1;
+            max-width: 400px;
         }
 
         .search-box input {
             width: 100%;
-            padding: 16px 20px 16px 50px;
+            padding: 12px 16px 12px 44px;
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.9375rem;
             font-family: inherit;
-            transition: all 0.3s ease;
+            color: var(--text-primary);
+            transition: all 0.2s;
         }
 
         .search-box input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: var(--glow);
-        }
-
-        .search-box input::placeholder {
-            color: var(--text-secondary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         .search-box i {
             position: absolute;
-            left: 18px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-secondary);
+            color: var(--text-tertiary);
         }
 
-        .filter-tags {
+        .filter-tabs {
             display: flex;
+            gap: 8px;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
         }
 
-        .filter-tag {
-            padding: 8px 18px;
+        .filter-tab {
+            padding: 8px 16px;
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
             border-radius: 50px;
-            color: var(--text-secondary);
             font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
         }
 
-        .filter-tag:hover {
+        .filter-tab:hover {
             border-color: var(--primary);
-            color: var(--text-primary);
+            color: var(--primary);
         }
 
-        .filter-tag.active {
-            background: var(--gradient);
-            border-color: transparent;
+        .filter-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
             color: white;
         }
 
-        /* Prompt Grid */
+        /* Grid */
         .prompt-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 40px 60px;
         }
 
         .prompt-card {
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             overflow: hidden;
-            transition: all 0.3s ease;
             cursor: pointer;
+            transition: all 0.25s ease;
         }
 
         .prompt-card:hover {
             transform: translateY(-4px);
-            border-color: var(--primary);
-            box-shadow: var(--glow);
+            box-shadow: var(--shadow-hover);
+            border-color: transparent;
         }
 
-        .prompt-image {
+        .card-image {
             width: 100%;
             height: auto;
             aspect-ratio: auto;
             display: block;
-            background: linear-gradient(135deg, #1a1a2e, #2d2d4a);
+            background: linear-gradient(135deg, #f0f0f3, #e0e0e0);
         }
 
-        .prompt-card-body {
-            padding: 20px;
+        .card-body {
+            padding: 16px;
         }
 
-        .prompt-card-header {
+        .card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
-        .prompt-category {
+        .card-category {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
-            background: rgba(99, 102, 241, 0.15);
+            gap: 4px;
+            padding: 4px 10px;
+            background: rgba(99, 102, 241, 0.1);
             border-radius: 50px;
             font-size: 0.75rem;
-            color: var(--primary);
-        }
-
-        .copy-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            background: rgba(99, 102, 241, 0.15);
-            border: none;
-            border-radius: 6px;
-            color: var(--primary);
-            font-size: 0.8rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .copy-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .copy-btn.copied {
-            background: #22c55e;
-            color: white;
-        }
-
-        .prompt-title {
-            font-size: 1rem;
             font-weight: 500;
-            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
             color: var(--text-primary);
         }
 
-        .prompt-text {
+        .card-text {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
+            font-size: 0.8125rem;
             color: var(--text-secondary);
-            background: rgba(0, 0, 0, 0.3);
-            padding: 12px;
-            border-radius: 8px;
             line-height: 1.7;
-            max-height: 100px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            position: relative;
         }
 
-        .prompt-text::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 30px;
-            background: linear-gradient(transparent, var(--card-bg));
-        }
-
-        .prompt-tags {
+        .card-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
             margin-top: 12px;
         }
 
-        .prompt-tag {
+        .card-tag {
             padding: 3px 8px;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--bg);
             border-radius: 4px;
             font-size: 0.7rem;
-            color: var(--text-secondary);
+            color: var(--text-tertiary);
         }
 
-        .prompt-meta {
+        /* Meta Grid */
+        .card-meta {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
             margin-top: 14px;
             padding-top: 14px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px solid var(--border);
         }
 
         .meta-item {
@@ -387,26 +353,20 @@
 
         .meta-label {
             font-size: 0.7rem;
-            color: var(--text-secondary);
-            opacity: 0.7;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .meta-value {
-            font-size: 0.8rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
             color: var(--text-primary);
         }
 
-        .meta-value.industry {
-            color: var(--secondary);
-        }
-
-        .meta-value.source {
-            color: var(--primary);
-        }
-
-        .meta-value.click-rate {
-            color: #22c55e;
-        }
+        .meta-value.industry { color: var(--secondary); }
+        .meta-value.source { color: var(--primary); }
+        .meta-value.click-rate { color: var(--success); }
 
         .star-rating {
             display: flex;
@@ -414,13 +374,78 @@
         }
 
         .star-rating i {
-            width: 12px;
-            height: 12px;
-            color: #fbbf24;
+            width: 14px;
+            height: 14px;
+            color: var(--star);
         }
 
         .star-rating i.empty {
-            color: rgba(255, 255, 255, 0.15);
+            color: var(--border);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: var(--bg);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+            color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-tertiary);
+        }
+
+        .empty-state i {
+            margin-bottom: 16px;
+            opacity: 0.4;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
 
         /* Toast */
@@ -429,17 +454,16 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            padding: 14px 28px;
+            padding: 14px 24px;
             background: var(--card-bg);
-            border: 1px solid rgba(34, 197, 94, 0.5);
-            border-radius: 10px;
-            color: #22c55e;
-            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-hover);
             display: flex;
             align-items: center;
             gap: 10px;
             opacity: 0;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             z-index: 1000;
         }
 
@@ -448,70 +472,34 @@
             opacity: 1;
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        footer a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: var(--secondary);
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 80px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-state i {
-            margin-bottom: 20px;
-            opacity: 0.5;
-        }
+        .toast.success { border-color: var(--success); }
+        .toast.success i { color: var(--success); }
 
         /* Admin Modal */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            display: flex;
-            justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
             align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
+            justify-content: center;
+            z-index: 200;
+            padding: 20px;
         }
 
         .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
+            display: flex;
         }
 
         .modal {
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            width: 90%;
-            max-width: 900px;
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 640px;
             max-height: 90vh;
             overflow: hidden;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.show .modal {
-            transform: scale(1);
+            display: flex;
+            flex-direction: column;
         }
 
         .modal-header {
@@ -519,62 +507,46 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border);
         }
 
         .modal-header h2 {
-            font-size: 1.25rem;
-            font-weight: 500;
+            font-size: 1.125rem;
+            font-weight: 600;
         }
 
-        .modal-close {
+        .modal-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+        }
+
+        .modal-tab {
+            padding: 16px 20px;
             background: none;
             border: none;
-            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--text-tertiary);
             cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: all 0.2s;
         }
 
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .modal-tab:hover {
             color: var(--text-primary);
+        }
+
+        .modal-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
         }
 
         .modal-body {
             padding: 24px;
-            max-height: calc(90vh - 140px);
             overflow-y: auto;
-        }
-
-        .admin-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-        }
-
-        .admin-tab {
-            padding: 10px 20px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .admin-tab:hover {
-            border-color: var(--primary);
-            color: var(--text-primary);
-        }
-
-        .admin-tab.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
+            flex: 1;
         }
 
         .form-group {
@@ -583,23 +555,24 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
             font-size: 0.875rem;
-            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-primary);
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 0.9rem;
+            padding: 12px 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.9375rem;
             font-family: inherit;
-            transition: all 0.3s ease;
+            color: var(--text-primary);
+            transition: all 0.2s;
         }
 
         .form-group input:focus,
@@ -607,12 +580,13 @@
         .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         .form-group textarea {
-            font-family: 'JetBrains Mono', monospace;
             min-height: 120px;
             resize: vertical;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .form-row {
@@ -621,108 +595,108 @@
             gap: 16px;
         }
 
-        .btn-primary {
+        .btn {
             padding: 12px 24px;
-            background: var(--gradient);
             border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 0.9rem;
-            font-family: inherit;
+            border-radius: var(--radius-sm);
+            font-size: 0.9375rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
+            background: var(--primary-hover);
         }
 
         .btn-danger {
-            padding: 8px 16px;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 6px;
-            color: #ef4444;
-            font-size: 0.8rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-danger:hover {
-            background: #ef4444;
+            background: #EF4444;
             color: white;
         }
 
-        /* Prompt List in Admin */
-        .prompt-list {
+        .btn-danger:hover {
+            background: #DC2626;
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        /* Admin List */
+        .admin-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .prompt-list-item {
+        .admin-item {
             display: flex;
             align-items: center;
             gap: 16px;
-            padding: 16px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            transition: all 0.3s ease;
+            padding: 12px;
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .prompt-list-item:hover {
-            background: rgba(0, 0, 0, 0.3);
+        .admin-item:hover {
+            background: var(--border);
         }
 
-        .prompt-list-thumb {
-            width: 80px;
-            height: 50px;
+        .admin-item img {
+            width: 60px;
+            height: 40px;
             object-fit: cover;
-            border-radius: 6px;
-            background: linear-gradient(135deg, #1a1a2e, #2d2d4a);
+            border-radius: 4px;
+            background: linear-gradient(135deg, #f0f0f3, #e0e0e0);
         }
 
-        .prompt-list-info {
+        .admin-item-info {
             flex: 1;
             min-width: 0;
         }
 
-        .prompt-list-title {
-            font-size: 0.9rem;
+        .admin-item-title {
             font-weight: 500;
-            margin-bottom: 4px;
+            font-size: 0.9375rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        .prompt-list-category {
-            font-size: 0.75rem;
-            color: var(--primary);
+        .admin-item-meta {
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
         }
 
-        .prompt-list-actions {
+        .admin-item-actions {
             display: flex;
             gap: 8px;
         }
 
-        .btn-edit {
+        .admin-item-actions button {
             padding: 6px 12px;
-            background: rgba(99, 102, 241, 0.15);
-            border: none;
-            border-radius: 6px;
-            color: var(--primary);
-            font-size: 0.8rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-edit:hover {
-            background: var(--primary);
-            color: white;
+            font-size: 0.8125rem;
         }
 
         /* Responsive */
@@ -736,6 +710,18 @@
             .prompt-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .header {
+                padding: 0 20px;
+            }
+
+            .controls {
+                padding: 24px 20px;
+            }
+
+            .prompt-grid {
+                padding: 0 20px 40px;
+            }
         }
 
         @media (max-width: 600px) {
@@ -743,79 +729,112 @@
                 grid-template-columns: 1fr;
             }
 
-            .form-row {
-                grid-template-columns: 1fr;
+            .hero {
+                padding: 40px 20px;
             }
 
-            .stats {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero-stats {
                 gap: 24px;
+            }
+
+            .controls-top {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: none;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
-        <div class="header-logo">PromptWorld</div>
-        <button class="admin-btn" onclick="openAdminPanel()">
-            <i data-lucide="settings" style="width:16px;height:16px;"></i>
-            管理
-        </button>
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i data-lucide="wand-2" style="width:18px;height:18px;"></i>
+                </div>
+                PromptWorld
+            </a>
+            <div class="header-actions">
+                <button class="icon-btn" id="themeToggle" title="切换主题">
+                    <i data-lucide="sun" style="width:20px;height:20px;"></i>
+                </button>
+                <button class="icon-btn" id="adminBtn" title="管理">
+                    <i data-lucide="settings" style="width:20px;height:20px;"></i>
+                </button>
+            </div>
+        </div>
     </header>
 
+    <!-- Hero -->
     <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <i data-lucide="sparkles" style="width:16px;height:16px;"></i>
-                AI 提示词宝库
-            </div>
-            <h1>PromptWorld</h1>
-            <p>探索精选文生图提示词，激发AI创作灵感。无论你是新手还是专业创作者，这里都能找到适合你的提示词。</p>
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-value" id="promptCount">0</div>
+        <div class="hero-inner">
+            <h1>AI 提示词宝库</h1>
+            <p>精选高质量文生图提示词，助力 Midjourney、Stable Diffusion、DALL-E 创作</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-value" id="promptCount">20</div>
                     <div class="stat-label">精选提示词</div>
                 </div>
-                <div class="stat-item">
+                <div class="stat">
                     <div class="stat-value">6</div>
                     <div class="stat-label">风格分类</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">∞</div>
-                    <div class="stat-label">创作灵感</div>
+                <div class="stat">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">AI 模型</div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Controls -->
     <div class="controls">
-        <div class="search-box">
-            <i data-lucide="search" style="width:20px;height:20px;"></i>
-            <input type="text" id="searchInput" placeholder="搜索提示词...">
-        </div>
-        <div class="filter-tags" id="filterTags">
-            <button class="filter-tag active" data-filter="all">全部</button>
-            <button class="filter-tag" data-filter="photorealistic">写实摄影</button>
-            <button class="filter-tag" data-filter="anime">动漫风格</button>
-            <button class="filter-tag" data-filter="digital">数字艺术</button>
-            <button class="filter-tag" data-filter="illustration">插画风格</button>
-            <button class="filter-tag" data-filter="concept">概念艺术</button>
-            <button class="filter-tag" data-filter="abstract">抽象艺术</button>
+        <div class="controls-top">
+            <div class="search-box">
+                <i data-lucide="search" style="width:18px;height:18px;"></i>
+                <input type="text" id="searchInput" placeholder="搜索提示词...">
+            </div>
+            <div class="filter-tabs" id="filterTabs">
+                <button class="filter-tab active" data-filter="all">全部</button>
+                <button class="filter-tab" data-filter="photorealistic">写实摄影</button>
+                <button class="filter-tab" data-filter="anime">动漫风格</button>
+                <button class="filter-tab" data-filter="digital">数字艺术</button>
+                <button class="filter-tab" data-filter="illustration">插画风格</button>
+                <button class="filter-tab" data-filter="concept">概念艺术</button>
+                <button class="filter-tab" data-filter="abstract">抽象艺术</button>
+            </div>
         </div>
     </div>
 
+    <!-- Grid -->
     <main class="prompt-grid" id="promptGrid"></main>
 
+    <!-- Empty State -->
     <div class="empty-state" id="emptyState" style="display: none;">
         <i data-lucide="search-x" style="width:64px;height:64px;"></i>
         <h3>没有找到匹配的提示词</h3>
         <p>试试其他关键词或筛选条件</p>
     </div>
 
+    <!-- Footer -->
     <footer>
-        <p>Made with ♥ by AI Enthusiasts | <a href="https://github.com" target="_blank">GitHub</a></p>
-        <p style="margin-top:10px;opacity:0.6;">免费开源，可随意使用</p>
+        <p>PromptWorld · <a href="https://github.com" target="_blank">GitHub</a></p>
+        <p style="margin-top:8px;opacity:0.6;">免费开源，可随意使用</p>
     </footer>
 
+    <!-- Toast -->
     <div class="toast" id="toast">
         <i data-lucide="check-circle" style="width:20px;height:20px;"></i>
         <span>已复制到剪贴板</span>
@@ -826,20 +845,19 @@
         <div class="modal">
             <div class="modal-header">
                 <h2>管理后台</h2>
-                <button class="modal-close" onclick="closeAdminPanel()">
+                <button class="icon-btn" onclick="closeAdminModal()">
                     <i data-lucide="x" style="width:20px;height:20px;"></i>
                 </button>
             </div>
+            <div class="modal-tabs">
+                <button class="modal-tab active" data-tab="list">列表</button>
+                <button class="modal-tab" data-tab="add">添加</button>
+                <button class="modal-tab" data-tab="edit" id="editTabBtn" style="display:none;">编辑</button>
+            </div>
             <div class="modal-body">
-                <div class="admin-tabs">
-                    <button class="admin-tab active" data-tab="list" onclick="switchTab('list')">提示词列表</button>
-                    <button class="admin-tab" data-tab="add" onclick="switchTab('add')">添加新提示词</button>
-                    <button class="admin-tab" data-tab="edit" onclick="switchTab('edit')" id="editTab" style="display:none;">编辑提示词</button>
-                </div>
-
                 <!-- List Tab -->
                 <div id="listTab">
-                    <div class="prompt-list" id="adminPromptList"></div>
+                    <div class="admin-list" id="adminList"></div>
                 </div>
 
                 <!-- Add Tab -->
@@ -895,19 +913,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>提示词内容 (英文效果更佳)</label>
+                            <label>提示词内容</label>
                             <textarea id="addText" placeholder="输入AI绘图提示词..." required></textarea>
                         </div>
                         <div class="form-group">
                             <label>标签 (用逗号分隔)</label>
                             <input type="text" id="addTags" placeholder="标签1, 标签2, 标签3">
                         </div>
-                        <button type="submit" class="btn-primary">添加提示词</button>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">添加提示词</button>
+                        </div>
                     </form>
                 </div>
 
                 <!-- Edit Tab -->
-                <div id="editTabContent" style="display:none;">
+                <div id="editTab" style="display:none;">
                     <form id="editForm">
                         <input type="hidden" id="editId">
                         <div class="form-group">
@@ -965,9 +985,10 @@
                             <label>标签 (用逗号分隔)</label>
                             <input type="text" id="editTags">
                         </div>
-                        <div style="display:flex;gap:12px;">
-                            <button type="submit" class="btn-primary">保存修改</button>
-                            <button type="button" class="btn-danger" onclick="deletePrompt()">删除</button>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">保存修改</button>
+                            <button type="button" class="btn btn-danger" onclick="deletePrompt()">删除</button>
+                            <button type="button" class="btn btn-secondary" onclick="switchTab('list')">取消</button>
                         </div>
                     </form>
                 </div>
@@ -1233,6 +1254,7 @@
         let searchQuery = '';
         let editingId = null;
 
+        // Load prompts from localStorage or use defaults
         function loadPrompts() {
             const stored = localStorage.getItem('promptworld_prompts');
             if (stored) {
@@ -1241,12 +1263,23 @@
                 prompts = [...DEFAULT_PROMPTS];
                 savePrompts();
             }
-            document.getElementById('promptCount').textContent = prompts.length;
         }
 
         function savePrompts() {
             localStorage.setItem('promptworld_prompts', JSON.stringify(prompts));
             document.getElementById('promptCount').textContent = prompts.length;
+        }
+
+        function renderStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += `<i data-lucide="star" style="fill:#FBBF24;"></i>`;
+                } else {
+                    stars += `<i data-lucide="star" class="empty"></i>`;
+                }
+            }
+            return stars;
         }
 
         function renderPrompts() {
@@ -1273,25 +1306,18 @@
             emptyState.style.display = 'none';
             grid.innerHTML = filtered.map(prompt => `
                 <article class="prompt-card" data-id="${prompt.id}">
-                    <img class="prompt-image" src="${prompt.image || 'https://picsum.photos/800/500?grayscale'}" alt="${prompt.title}"
+                    <img class="card-image" src="${prompt.image || 'https://picsum.photos/800/500?grayscale'}" alt="${prompt.title}"
                          onerror="this.src='https://picsum.photos/800/500?grayscale'">
-                    <div class="prompt-card-body">
-                        <div class="prompt-card-header">
-                            <span class="prompt-category">
-                                <i data-lucide="tag" style="width:12px;height:12px;"></i>
-                                ${CATEGORY_NAMES[prompt.category] || prompt.category}
-                            </span>
-                            <button class="copy-btn" onclick="event.stopPropagation(); copyPrompt(${prompt.id})">
-                                <i data-lucide="copy" style="width:14px;height:14px;"></i>
-                                <span>复制</span>
-                            </button>
+                    <div class="card-body">
+                        <div class="card-header">
+                            <span class="card-category">${CATEGORY_NAMES[prompt.category] || prompt.category}</span>
                         </div>
-                        <h3 class="prompt-title">${prompt.title}</h3>
-                        <div class="prompt-text">${prompt.text}</div>
-                        <div class="prompt-tags">
-                            ${(prompt.tags || []).map(tag => `<span class="prompt-tag">#${tag}</span>`).join('')}
+                        <h3 class="card-title">${prompt.title}</h3>
+                        <div class="card-text">${prompt.text}</div>
+                        <div class="card-tags">
+                            ${(prompt.tags || []).map(tag => `<span class="card-tag">#${tag}</span>`).join('')}
                         </div>
-                        <div class="prompt-meta">
+                        <div class="card-meta">
                             <div class="meta-item">
                                 <span class="meta-label">行业</span>
                                 <span class="meta-value industry">${prompt.industry || '-'}</span>
@@ -1306,28 +1332,21 @@
                             </div>
                             <div class="meta-item">
                                 <span class="meta-label">星级</span>
-                                <div class="star-rating">
-                                    ${renderStars(prompt.rating || 0)}
-                                </div>
+                                <div class="star-rating">${renderStars(prompt.rating || 0)}</div>
                             </div>
+                        </div>
+                        <div class="card-footer">
+                            <div></div>
+                            <button class="copy-btn" onclick="event.stopPropagation(); copyPrompt(${prompt.id})">
+                                <i data-lucide="copy" style="width:14px;height:14px;"></i>
+                                复制
+                            </button>
                         </div>
                     </div>
                 </article>
             `).join('');
 
             lucide.createIcons();
-        }
-
-        function renderStars(rating) {
-            let stars = '';
-            for (let i = 1; i <= 5; i++) {
-                if (i <= rating) {
-                    stars += `<i data-lucide="star" style="fill:#fbbf24;"></i>`;
-                } else {
-                    stars += `<i data-lucide="star" class="empty"></i>`;
-                }
-            }
-            return stars;
         }
 
         function copyPrompt(id) {
@@ -1338,20 +1357,14 @@
                 const btn = document.querySelector(`.prompt-card[data-id="${id}"] .copy-btn`);
                 if (!btn) return;
                 btn.classList.add('copied');
-                btn.innerHTML = `
-                    <i data-lucide="check" style="width:14px;height:14px;"></i>
-                    <span>已复制</span>
-                `;
+                btn.innerHTML = `<i data-lucide="check" style="width:14px;height:14px;"></i> 已复制`;
                 lucide.createIcons();
 
                 showToast();
 
                 setTimeout(() => {
                     btn.classList.remove('copied');
-                    btn.innerHTML = `
-                        <i data-lucide="copy" style="width:14px;height:14px;"></i>
-                        <span>复制</span>
-                    `;
+                    btn.innerHTML = `<i data-lucide="copy" style="width:14px;height:14px;"></i> 复制`;
                     lucide.createIcons();
                 }, 2000);
             });
@@ -1359,44 +1372,95 @@
 
         function showToast() {
             const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
+            toast.classList.add('show', 'success');
+            setTimeout(() => toast.classList.remove('show', 'success'), 2500);
         }
 
-        // Admin Panel
-        function openAdminPanel() {
+        // Theme toggle
+        function initTheme() {
+            const saved = localStorage.getItem('promptworld_theme');
+            if (saved === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                updateThemeIcon(true);
+            }
+        }
+
+        function updateThemeIcon(isDark) {
+            const btn = document.getElementById('themeToggle');
+            if (isDark) {
+                btn.innerHTML = '<i data-lucide="moon" style="width:20px;height:20px;"></i>';
+            } else {
+                btn.innerHTML = '<i data-lucide="sun" style="width:20px;height:20px;"></i>';
+            }
+            lucide.createIcons();
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('promptworld_theme', 'light');
+                updateThemeIcon(false);
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('promptworld_theme', 'dark');
+                updateThemeIcon(true);
+            }
+        });
+
+        // Filter tabs
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelector('.filter-tab.active').classList.remove('active');
+                tab.classList.add('active');
+                currentFilter = tab.dataset.filter;
+                renderPrompts();
+            });
+        });
+
+        // Search
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderPrompts();
+        });
+
+        // Admin Modal
+        function openAdminModal() {
             document.getElementById('adminModal').classList.add('show');
-            renderAdminList();
             switchTab('list');
+            renderAdminList();
         }
 
-        function closeAdminPanel() {
+        function closeAdminModal() {
             document.getElementById('adminModal').classList.remove('show');
             editingId = null;
         }
 
         function switchTab(tab) {
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-
+            document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
             document.getElementById('listTab').style.display = tab === 'list' ? 'block' : 'none';
             document.getElementById('addTab').style.display = tab === 'add' ? 'block' : 'none';
-            document.getElementById('editTabContent').style.display = tab === 'edit' ? 'block' : 'none';
-            document.getElementById('editTab').style.display = tab === 'edit' ? 'inline-block' : 'none';
+            document.getElementById('editTab').style.display = tab === 'edit' ? 'block' : 'none';
+            document.getElementById('editTabBtn').style.display = tab === 'edit' ? 'block' : 'none';
+
+            if (tab === 'list') document.querySelector('[data-tab="list"]').classList.add('active');
+            if (tab === 'add') document.querySelector('[data-tab="add"]').classList.add('active');
+            if (tab === 'edit') document.querySelector('[data-tab="edit"]').classList.add('active');
         }
 
         function renderAdminList() {
-            const list = document.getElementById('adminPromptList');
-            list.innerHTML = prompts.map(prompt => `
-                <div class="prompt-list-item">
-                    <img class="prompt-list-thumb" src="${prompt.image || 'https://picsum.photos/160/100?grayscale'}" alt=""
-                         onerror="this.src='https://picsum.photos/160/100?grayscale'">
-                    <div class="prompt-list-info">
-                        <div class="prompt-list-title">${prompt.title}</div>
-                        <div class="prompt-list-category">${CATEGORY_NAMES[prompt.category] || prompt.category}</div>
+            const list = document.getElementById('adminList');
+            list.innerHTML = prompts.map(p => `
+                <div class="admin-item" onclick="editPrompt(${p.id})">
+                    <img src="${p.image || 'https://picsum.photos/60/40?grayscale'}" alt="">
+                    <div class="admin-item-info">
+                        <div class="admin-item-title">${p.title}</div>
+                        <div class="admin-item-meta">${CATEGORY_NAMES[p.category]} · ${p.source || '-'}</div>
                     </div>
-                    <div class="prompt-list-actions">
-                        <button class="btn-edit" onclick="editPrompt(${prompt.id})">编辑</button>
+                    <div class="admin-item-actions">
+                        <button class="btn btn-secondary" onclick="event.stopPropagation(); editPrompt(${p.id})">
+                            <i data-lucide="edit-2" style="width:14px;height:14px;"></i> 编辑
+                        </button>
                     </div>
                 </div>
             `).join('');
@@ -1429,11 +1493,18 @@
             prompts = prompts.filter(p => p.id !== editingId);
             savePrompts();
             renderPrompts();
-            closeAdminPanel();
-            showToastMessage('已删除');
+            closeAdminModal();
+            showToastMessage('删除成功');
         }
 
-        // Form Handlers
+        function showToastMessage(msg) {
+            const toast = document.getElementById('toast');
+            toast.querySelector('span').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Form handlers
         document.getElementById('addForm').addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -1453,9 +1524,10 @@
             prompts.unshift(newPrompt);
             savePrompts();
             renderPrompts();
-
             e.target.reset();
             showToastMessage('添加成功');
+            switchTab('list');
+            renderAdminList();
         });
 
         document.getElementById('editForm').addEventListener('submit', (e) => {
@@ -1480,45 +1552,29 @@
 
             savePrompts();
             renderPrompts();
-            closeAdminPanel();
             showToastMessage('保存成功');
+            switchTab('list');
+            renderAdminList();
         });
 
-        function showToastMessage(msg) {
-            const toast = document.getElementById('toast');
-            toast.querySelector('span').textContent = msg;
-            showToast();
-            setTimeout(() => toast.querySelector('span').textContent = '已复制到剪贴板', 3000);
-        }
-
-        // Event Listeners
-        document.querySelectorAll('.filter-tag').forEach(tag => {
-            tag.addEventListener('click', () => {
-                document.querySelector('.filter-tag.active').classList.remove('active');
-                tag.classList.add('active');
-                currentFilter = tag.dataset.filter;
-                renderPrompts();
-            });
+        document.querySelectorAll('.modal-tab').forEach(tab => {
+            tab.addEventListener('click', () => switchTab(tab.dataset.tab));
         });
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            searchQuery = e.target.value;
-            renderPrompts();
-        });
+        document.getElementById('adminBtn').addEventListener('click', openAdminModal);
 
         // Close modal on overlay click
         document.getElementById('adminModal').addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal-overlay')) {
-                closeAdminPanel();
+            if (e.target === document.getElementById('adminModal')) {
+                closeAdminModal();
             }
         });
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadPrompts();
-            renderPrompts();
-            lucide.createIcons();
-        });
+        // Init
+        loadPrompts();
+        initTheme();
+        renderPrompts();
+        lucide.createIcons();
     </script>
 </body>
 </html>
