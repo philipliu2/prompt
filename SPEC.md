@@ -110,7 +110,8 @@
 ├─────────────────────────────────────────────┤
 │  ┌─────────────────────────────────────┐    │
 │  │ 封面图片上传                          │    │
-│  │ [拖拽或点击上传 JPG/PNG]              │    │
+│  │ [拖拽或点击上传 / 粘贴图片 / 输入URL]   │    │
+│  │ 支持 JPG, PNG, 或图片URL              │    │
 │  └─────────────────────────────────────┘    │
 │                                             │
 │  标题: [________________] ⭐必填            │
@@ -168,8 +169,8 @@
   id: Number,           // 唯一ID
   title: String,        // 标题 ⭐必填
   category: String,      // 分类: photorealistic/anime/digital/illustration/concept/abstract
-  image: String,        // 图片URL或Base64
-  imageWidth: Number,    // 图片原始宽度
+  image: String,        // 图片URL或Base64 (粘贴上传自动转Base64)
+  imageWidth: Number,    // 图片原始宽度 (用于瀑布流高度计算)
   imageHeight: Number,  // 图片原始高度
   source: String,       // 来源: Midjourney/DALL-E/Stable Diffusion
   industry: String,     // 行业
