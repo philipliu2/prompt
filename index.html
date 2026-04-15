@@ -365,16 +365,13 @@
             </div>
             <div class="filter-tabs" id="filterTabs">
                 <button class="filter-tab active" data-filter="all">全部</button>
-                <button class="filter-tab" data-filter="fresh">清新</button>
-                <button class="filter-tab" data-filter="active">活泼</button>
-                <button class="filter-tab" data-filter="humor">幽默</button>
-                <button class="filter-tab" data-filter="professional">专业</button>
-                <button class="filter-tab" data-filter="cozy">温馨</button>
-                <button class="filter-tab" data-filter="relaxed">松弛</button>
-                <button class="filter-tab" data-filter="healing">治愈</button>
-                <button class="filter-tab" data-filter="luxurious">高端</button>
-                <button class="filter-tab" data-filter="cool">酷炫</button>
-                <button class="filter-tab" data-filter="romantic">浪漫</button>
+                <button class="filter-tab" data-filter="人物写实">人物写实</button>
+                <button class="filter-tab" data-filter="场景写实">场景写实</button>
+                <button class="filter-tab" data-filter="动漫图">动漫图</button>
+                <button class="filter-tab" data-filter="信息图">信息图</button>
+                <button class="filter-tab" data-filter="插画图">插画图</button>
+                <button class="filter-tab" data-filter="海报图">海报图</button>
+                <button class="filter-tab" data-filter="创意图">创意图</button>
             </div>
         </div>
     </div>
@@ -777,14 +774,14 @@
             const empty = document.getElementById('emptyState');
 
             const filtered = prompts.filter(p => {
-                const matchFilter = currentFilter === 'all' || p.category === currentFilter;
+                const matchFilter = currentFilter === 'all' || p.imageType === currentFilter;
                 const q = searchQuery.toLowerCase();
                 const matchSearch = !q ||
                     p.title.toLowerCase().includes(q) ||
                     (p.tags && p.tags.some(t => t.toLowerCase().includes(q))) ||
                     (p.industry && p.industry.toLowerCase().includes(q)) ||
                     (p.source && p.source.toLowerCase().includes(q)) ||
-                    (p.imageType && p.imageType.toLowerCase().includes(q));
+                    (p.category && p.category.toLowerCase().includes(q));
                 return matchFilter && matchSearch;
             });
 
@@ -1017,7 +1014,7 @@
                     <img src="${p.image}" alt="" onerror="this.src='https://picsum.photos/50/35?grayscale'">
                     <div class="admin-item-info">
                         <div class="admin-item-title">${p.title}</div>
-                        <div class="admin-item-meta">${CATEGORY_NAMES[p.category]} · ${p.source || '-'} · ❤️${p.likes || 0}</div>
+                        <div class="admin-item-meta">${p.imageType} · ${p.source || '-'} · ❤️${p.likes || 0}</div>
                     </div>
                     <button class="btn btn-secondary" onclick="event.stopPropagation();editPrompt(${p.id})">编辑</button>
                 </div>`).join('');
