@@ -758,27 +758,46 @@
         let currentDetailId = null;
 
         function loadPrompts() {
-            const stored = localStorage.getItem('promptworld_prompts');
-            const likesStored = localStorage.getItem('promptworld_likes') || '{}';
-            const likesMap = JSON.parse(likesStored);
-            if (stored) {
-                prompts = JSON.parse(stored).map(p => ({
-                    ...p,
-                    likedByMe: likesMap[p.id] || false,
-                    likes: p.likes || 0
-                }));
-            } else {
+            try {
+                const stored = localStorage.getItem('promptworld_prompts');
+                const likesStored = localStorage.getItem('promptworld_likes') || '{}';
+                const likesMap = JSON.parse(likesStored);
+                if (stored) {
+                    prompts = JSON.parse(stored).map(p => ({
+                        ...p,
+                        likedByMe: likesMap[p.id] || false,
+                        likes: p.likes || 0
+                    }));
+                } else {
+                    prompts = SAMPLE_PROMPTS.map(p => ({...p, likedByMe: false}));
+                    savePrompts();
+                }
+            } catch (e) {
+                console.error('加载数据失败:', e);
                 prompts = SAMPLE_PROMPTS.map(p => ({...p, likedByMe: false}));
-                savePrompts();
+                showToast('数据加载失败，已使用默认数据');
             }
         }
 
         function savePrompts() {
-            localStorage.setItem('promptworld_prompts', JSON.stringify(prompts));
-            const likesMap = {};
-            prompts.forEach(p => { if (p.likedByMe) likesMap[p.id] = true; });
-            localStorage.setItem('promptworld_likes', JSON.stringify(likesMap));
-            updateStats();
+            try {
+                const data = JSON.stringify(prompts);
+                // Check size (localStorage typically has 5MB limit)
+                if (data.length > 4.5 * 1024 * 1024) {
+                    showToast('数据过大，请压缩图片或减少内容');
+                    return false;
+                }
+                localStorage.setItem('promptworld_prompts', data);
+                const likesMap = {};
+                prompts.forEach(p => { if (p.likedByMe) likesMap[p.id] = true; });
+                localStorage.setItem('promptworld_likes', JSON.stringify(likesMap));
+                updateStats();
+                return true;
+            } catch (e) {
+                console.error('保存失败:', e);
+                showToast('保存失败：' + e.message);
+                return false;
+            }
         }
 
         function updateStats() {
@@ -1118,6 +1137,10 @@
                     if (item.type.startsWith('image/')) {
                         const file = item.getAsFile();
                         if (file) {
+                            // Check file size (warn if > 500KB)
+                            if (file.size > 500 * 1024) {
+                                showToast('图片较大，建议压缩后使用或使用图片URL');
+                            }
                             const reader = new FileReader();
                             reader.onload = (ev) => {
                                 urlInput.value = ev.target.result;
@@ -1251,7 +1274,10 @@
             // Helper to save and reset form
             function saveAndReset() {
                 prompts.unshift(newPrompt);
-                savePrompts();
+                if (!savePrompts()) {
+                    prompts.shift(); // Remove if save failed
+                    return;
+                }
                 renderPrompts();
                 e.target.reset();
                 document.getElementById('addImageArea').innerHTML = `<div class="image-upload-text"><i data-lucide="image-plus" style="width:32px;height:32px;"></i></div><div class="image-upload-text">点击上传 / 粘贴图片 / 输入URL</div><div class="image-upload-hint">支持 JPG, PNG 或图片链接</div>`;
