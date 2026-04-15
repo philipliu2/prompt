@@ -119,7 +119,8 @@
 │  原始提示词: [________________________]    │
 │             [________________________] ⭐必填│
 │                                             │
-│  来源: [________]  行业: [________]         │
+│  图片类型: [____]  作者: [________]         │
+│  行业: [________]                           │
 │                                             │
 │  [🤖 AI 自动优化]  [🤖 AI 自动生成标签]      │
 │                                             │
@@ -169,12 +170,13 @@
 {
   id: Number,           // 唯一ID
   title: String,        // 标题 ⭐必填
-  category: String,      // 分类: photorealistic/anime/digital/illustration/concept/abstract
+  category: String,     // 风格分类: photorealistic/anime/digital/illustration/concept/abstract
+  imageType: String,    // 图片类型: 人物写实/场景写实/动漫图/信息图/插画图/海报图/创意图
   image: String,        // 图片URL或Base64 (粘贴上传自动转Base64)
   imageWidth: Number,    // 图片原始宽度 (用于瀑布流高度计算)
   imageHeight: Number,  // 图片原始高度
-  source: String,       // 来源: Midjourney/DALL-E/Stable Diffusion
-  industry: String,     // 行业
+  source: String,       // 作者/创作者名字
+  industry: String,     // 广告主行业: 游戏/网服/教育/金融/旅游/家装等
   clickRate: String,    // 点击率: "8.5%"
   rating: Number,       // 星级: 1-5
   likes: Number,        // 点赞数
@@ -207,18 +209,21 @@
 | concept | 概念艺术 | Concept Art |
 | abstract | 抽象艺术 | Abstract |
 
-### 4.2 Sources (来源)
+### 4.2 Image Types (图片类型)
 
-| 来源 | 说明 |
-|------|------|
-| Midjourney | MJ 系列模型 |
-| DALL-E | OpenAI DALL-E 系列 |
-| Stable Diffusion | SD 系列模型 |
-| 其他 | 其他 AI 生成工具 |
+| 中文名 | 说明 |
+|--------|------|
+| 人物写实 | Photorealistic Portrait |
+| 场景写实 | Photorealistic Scene/Landscape |
+| 动漫图 | Anime/Cartoon |
+| 信息图 | Infographic |
+| 插画图 | Illustration |
+| 海报图 | Poster |
+| 创意图 | 概念/抽象/数字艺术等 Creative |
 
-### 4.3 Industries (行业)
+### 4.3 Industries (行业) - 广告主行业
 
-建筑设计、动画制作、游戏设计、平面设计、工业设计、艺术创作、摄影、UI设计、文创设计、影视制作、产品设计
+游戏、网服、教育、金融、旅游、家装、电商、快消、美妆、医美、汽车、房产、娱乐、资讯、科技
 
 ---
 
