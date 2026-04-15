@@ -35,15 +35,60 @@
             line-height: 1.6;
         }
 
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 16px 24px;
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .header-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .admin-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 8px;
+            color: var(--primary);
+            font-size: 0.875rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
         /* Hero Section */
         .hero {
-            min-height: 60vh;
+            min-height: 50vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 80px 20px;
+            padding: 120px 20px 60px;
             background: radial-gradient(ellipse at top, #1a1a3e 0%, var(--bg) 70%);
             position: relative;
             overflow: hidden;
@@ -100,6 +145,31 @@
             font-size: 0.875rem;
             color: var(--primary);
             margin-bottom: 24px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
         }
 
         /* Search & Filter */
@@ -178,7 +248,7 @@
         /* Prompt Grid */
         .prompt-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 24px;
             max-width: 1200px;
             margin: 0 auto;
@@ -189,7 +259,7 @@
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
-            padding: 24px;
+            overflow: hidden;
             transition: all 0.3s ease;
             cursor: pointer;
         }
@@ -200,11 +270,22 @@
             box-shadow: var(--glow);
         }
 
+        .prompt-image {
+            width: 100%;
+            aspect-ratio: 16/10;
+            object-fit: cover;
+            background: linear-gradient(135deg, #1a1a2e, #2d2d4a);
+        }
+
+        .prompt-card-body {
+            padding: 20px;
+        }
+
         .prompt-card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .prompt-category {
@@ -222,12 +303,12 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 14px;
+            padding: 6px 12px;
             background: rgba(99, 102, 241, 0.15);
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             color: var(--primary);
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             font-family: inherit;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -244,21 +325,21 @@
         }
 
         .prompt-title {
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 500;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: var(--text-primary);
         }
 
         .prompt-text {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             background: rgba(0, 0, 0, 0.3);
-            padding: 16px;
-            border-radius: 10px;
-            line-height: 1.8;
-            max-height: 150px;
+            padding: 12px;
+            border-radius: 8px;
+            line-height: 1.7;
+            max-height: 100px;
             overflow: hidden;
             position: relative;
         }
@@ -269,22 +350,22 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 40px;
+            height: 30px;
             background: linear-gradient(transparent, var(--card-bg));
         }
 
         .prompt-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 16px;
+            gap: 6px;
+            margin-top: 12px;
         }
 
         .prompt-tag {
-            padding: 4px 10px;
+            padding: 3px 8px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            font-size: 0.75rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
             color: var(--text-secondary);
         }
 
@@ -343,45 +424,278 @@
             opacity: 0.5;
         }
 
+        /* Admin Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 24px;
+            max-height: calc(90vh - 140px);
+            overflow-y: auto;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .admin-tab {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-tab:hover {
+            border-color: var(--primary);
+            color: var(--text-primary);
+        }
+
+        .admin-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            font-family: 'JetBrains Mono', monospace;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .btn-primary {
+            padding: 12px 24px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.9rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            padding: 8px 16px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 6px;
+            color: #ef4444;
+            font-size: 0.8rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        /* Prompt List in Admin */
+        .prompt-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .prompt-list-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .prompt-list-item:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .prompt-list-thumb {
+            width: 80px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #1a1a2e, #2d2d4a);
+        }
+
+        .prompt-list-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .prompt-list-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .prompt-list-category {
+            font-size: 0.75rem;
+            color: var(--primary);
+        }
+
+        .prompt-list-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-edit {
+            padding: 6px 12px;
+            background: rgba(99, 102, 241, 0.15);
+            border: none;
+            border-radius: 6px;
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            background: var(--primary);
+            color: white;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .prompt-grid {
                 grid-template-columns: 1fr;
             }
 
-            .prompt-card {
-                padding: 20px;
+            .form-row {
+                grid-template-columns: 1fr;
             }
-        }
 
-        /* Stats Bar */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
+            .stats {
+                gap: 24px;
+            }
         }
     </style>
 </head>
 <body>
+    <header class="header">
+        <div class="header-logo">PromptWorld</div>
+        <button class="admin-btn" onclick="openAdminPanel()">
+            <i data-lucide="settings" style="width:16px;height:16px;"></i>
+            管理
+        </button>
+    </header>
+
     <section class="hero">
         <div class="hero-content">
             <div class="hero-badge">
@@ -392,7 +706,7 @@
             <p>探索精选文生图提示词，激发AI创作灵感。无论你是新手还是专业创作者，这里都能找到适合你的提示词。</p>
             <div class="stats">
                 <div class="stat-item">
-                    <div class="stat-value" id="promptCount">20</div>
+                    <div class="stat-value" id="promptCount">0</div>
                     <div class="stat-label">精选提示词</div>
                 </div>
                 <div class="stat-item">
@@ -423,9 +737,7 @@
         </div>
     </div>
 
-    <main class="prompt-grid" id="promptGrid">
-        <!-- Cards will be rendered here -->
-    </main>
+    <main class="prompt-grid" id="promptGrid"></main>
 
     <div class="empty-state" id="emptyState" style="display: none;">
         <i data-lucide="search-x" style="width:64px;height:64px;"></i>
@@ -443,13 +755,123 @@
         <span>已复制到剪贴板</span>
     </div>
 
+    <!-- Admin Modal -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>管理后台</h2>
+                <button class="modal-close" onclick="closeAdminPanel()">
+                    <i data-lucide="x" style="width:20px;height:20px;"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="list" onclick="switchTab('list')">提示词列表</button>
+                    <button class="admin-tab" data-tab="add" onclick="switchTab('add')">添加新提示词</button>
+                    <button class="admin-tab" data-tab="edit" onclick="switchTab('edit')" id="editTab" style="display:none;">编辑提示词</button>
+                </div>
+
+                <!-- List Tab -->
+                <div id="listTab">
+                    <div class="prompt-list" id="adminPromptList"></div>
+                </div>
+
+                <!-- Add Tab -->
+                <div id="addTab" style="display:none;">
+                    <form id="addForm">
+                        <div class="form-group">
+                            <label>封面图片 URL</label>
+                            <input type="text" id="addImage" placeholder="https://...">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>标题</label>
+                                <input type="text" id="addTitle" placeholder="输入提示词标题" required>
+                            </div>
+                            <div class="form-group">
+                                <label>风格分类</label>
+                                <select id="addCategory" required>
+                                    <option value="">选择分类</option>
+                                    <option value="photorealistic">写实摄影</option>
+                                    <option value="anime">动漫风格</option>
+                                    <option value="digital">数字艺术</option>
+                                    <option value="illustration">插画风格</option>
+                                    <option value="concept">概念艺术</option>
+                                    <option value="abstract">抽象艺术</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>提示词内容 (英文效果更佳)</label>
+                            <textarea id="addText" placeholder="输入AI绘图提示词..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>标签 (用逗号分隔)</label>
+                            <input type="text" id="addTags" placeholder="标签1, 标签2, 标签3">
+                        </div>
+                        <button type="submit" class="btn-primary">添加提示词</button>
+                    </form>
+                </div>
+
+                <!-- Edit Tab -->
+                <div id="editTabContent" style="display:none;">
+                    <form id="editForm">
+                        <input type="hidden" id="editId">
+                        <div class="form-group">
+                            <label>封面图片 URL</label>
+                            <input type="text" id="editImage" placeholder="https://...">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>标题</label>
+                                <input type="text" id="editTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label>风格分类</label>
+                                <select id="editCategory" required>
+                                    <option value="photorealistic">写实摄影</option>
+                                    <option value="anime">动漫风格</option>
+                                    <option value="digital">数字艺术</option>
+                                    <option value="illustration">插画风格</option>
+                                    <option value="concept">概念艺术</option>
+                                    <option value="abstract">抽象艺术</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>提示词内容</label>
+                            <textarea id="editText" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>标签 (用逗号分隔)</label>
+                            <input type="text" id="editTags">
+                        </div>
+                        <div style="display:flex;gap:12px;">
+                            <button type="submit" class="btn-primary">保存修改</button>
+                            <button type="button" class="btn-danger" onclick="deletePrompt()">删除</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const prompts = [
+        const CATEGORY_NAMES = {
+            'photorealistic': '写实摄影',
+            'anime': '动漫风格',
+            'digital': '数字艺术',
+            'illustration': '插画风格',
+            'concept': '概念艺术',
+            'abstract': '抽象艺术'
+        };
+
+        const DEFAULT_PROMPTS = [
             {
                 id: 1,
                 title: "赛博朋克都市夜景",
                 category: "photorealistic",
-                categoryName: "写实摄影",
+                image: "https://images.unsplash.com/photo-1480796927426-f609979314bd?w=800&h=500&fit=crop",
                 text: "Cyberpunk cityscape at night, neon-lit skyscrapers, rain-soaked streets, futuristic vehicles, holographic advertisements, cinematic lighting, shot on Sony A7R IV, 35mm lens, f/1.8, ISO 3200",
                 tags: ["夜景", "霓虹", "未来城市"]
             },
@@ -457,7 +879,7 @@
                 id: 2,
                 title: "宫崎骏风格夏日乡村",
                 category: "anime",
-                categoryName: "动漫风格",
+                image: "https://images.unsplash.com/photo-1528164344705-47542687000d?w=800&h=500&fit=crop",
                 text: "Studio Ghibli style, peaceful countryside in summer, traditional Japanese house, rice fields, distant mountains, warm golden hour lighting, floating fireflies, detailed background art, peaceful atmosphere",
                 tags: ["吉卜力", "夏天", "治愈"]
             },
@@ -465,15 +887,15 @@
                 id: 3,
                 title: "未来数字少女",
                 category: "digital",
-                categoryName: "数字艺术",
+                image: "https://images.unsplash.com/photo-1535378620166-273708d44e4c?w=800&h=500&fit=crop",
                 text: "Digital art portrait of a futuristic girl, holographic accessories, flowing silver hair, iridescent eyes, cyberpunk fashion, glowing circuits on skin, ethereal glow, ultra detailed, 8k resolution",
-                tags: ["数字人", "科幻", " portrait"]
+                tags: ["数字人", "科幻", "portrait"]
             },
             {
                 id: 4,
                 title: "水彩花卉组合",
                 category: "illustration",
-                categoryName: "插画风格",
+                image: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=800&h=500&fit=crop",
                 text: "Watercolor illustration of a bouquet of wildflowers, soft pastel colors, delicate petals, botanical details, white background, visible brushstrokes, artistic style, high quality watercolor paper texture",
                 tags: ["水彩", "花卉", "小清新"]
             },
@@ -481,7 +903,7 @@
                 id: 5,
                 title: "蒸汽朋克飞行器",
                 category: "concept",
-                categoryName: "概念艺术",
+                image: "https://images.unsplash.com/photo-1534996683340-e988a40be48e?w=800&h=500&fit=crop",
                 text: "Steampunk airship concept art, brass and copper machinery, Victorian era technology, ornate details, floating in cloudy sky, dramatic sunset lighting, detailed engineering blueprints aesthetic",
                 tags: ["蒸汽朋克", "飞行器", "维多利亚"]
             },
@@ -489,7 +911,7 @@
                 id: 6,
                 title: "极光几何抽象",
                 category: "abstract",
-                categoryName: "抽象艺术",
+                image: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800&h=500&fit=crop",
                 text: "Abstract art with flowing aurora borealis patterns, geometric shapes intertwined with organic curves, gradient from deep purple to cyan and green, minimalist composition, museum quality print",
                 tags: ["极光", "几何", "极简"]
             },
@@ -497,7 +919,7 @@
                 id: 7,
                 title: "日落海滩肖像",
                 category: "photorealistic",
-                categoryName: "写实摄影",
+                image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=500&fit=crop",
                 text: "Photorealistic portrait of a woman on tropical beach at sunset, golden hour lighting, wind blown hair, crystal clear turquoise water, coconut trees, shot with Canon EOS R5, 85mm f/1.4",
                 tags: ["海滩", "日落", "人像"]
             },
@@ -505,7 +927,7 @@
                 id: 8,
                 title: "新海诚风格雨日",
                 category: "anime",
-                categoryName: "动漫风格",
+                image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=500&fit=crop",
                 text: "Makoto Shinkai style, rain falling on city streets at night, reflections on wet pavement, warm street lamps, distant skyscrapers, girl with umbrella silhouette, ultra detailed backgrounds",
                 tags: ["新海诚", "雨天", "城市"]
             },
@@ -513,7 +935,7 @@
                 id: 9,
                 title: "暗黑天使概念",
                 category: "digital",
-                categoryName: "数字艺术",
+                image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&h=500&fit=crop",
                 text: "Dark angel character concept art, broken halo, torn wings revealing mechanical bones, gothic armor, dramatic rim lighting, dark fantasy art style, ultra detailed digital painting",
                 tags: ["天使", "暗黑", "角色设计"]
             },
@@ -521,7 +943,7 @@
                 id: 10,
                 title: "扁平化城市插画",
                 category: "illustration",
-                categoryName: "插画风格",
+                image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=500&fit=crop",
                 text: "Flat design illustration of a modern city skyline, geometric buildings, pastel sunset gradient sky, minimal style, vector art, clean lines, popular on Dribbble, 4k resolution",
                 tags: ["扁平", "城市", "矢量"]
             },
@@ -529,7 +951,7 @@
                 id: 11,
                 title: "废墟太空站",
                 category: "concept",
-                categoryName: "概念艺术",
+                image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800&h=500&fit=crop",
                 text: "Abandoned space station concept art, derelict spacecraft, alien planet visible through broken windows, dust particles floating in moonlight, volumetric fog, sci-fi environment art",
                 tags: ["太空", "废墟", "科幻"]
             },
@@ -537,7 +959,7 @@
                 id: 12,
                 title: "分形宇宙漩涡",
                 category: "abstract",
-                categoryName: "抽象艺术",
+                image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&h=500&fit=crop",
                 text: "Abstract fractal art, infinite recursive patterns, mandala-like vortex, cosmic scale, deep blacks with vibrant neon accents, hypnotic detail, mathematically precise",
                 tags: ["分形", "曼陀罗", "宇宙"]
             },
@@ -545,7 +967,7 @@
                 id: 13,
                 title: "复古胶片咖啡馆",
                 category: "photorealistic",
-                categoryName: "写实摄影",
+                image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&h=500&fit=crop",
                 text: "Vintage film photography of a cozy coffee shop interior, warm tungsten lighting, exposed brick walls, wooden furniture, steam rising from coffee cups, shot on Kodak Portra 400, grain visible",
                 tags: ["咖啡馆", "复古", "胶片"]
             },
@@ -553,7 +975,7 @@
                 id: 14,
                 title: "异世界传送门",
                 category: "anime",
-                categoryName: "动漫风格",
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=500&fit=crop",
                 text: "Anime style portal to another world, swirling magical vortex, glowing runes, mysterious forest on the other side, starlight reflections, fantasy adventure manga cover art style",
                 tags: ["魔法", "传送门", "异世界"]
             },
@@ -561,7 +983,7 @@
                 id: 15,
                 title: "赛博格机械手臂",
                 category: "digital",
-                categoryName: "数字艺术",
+                image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=500&fit=crop",
                 text: "Hyperrealistic cyberpunk prosthetic arm, exposed mechanical joints, synthetic skin interface, LED indicators, chrome and titanium materials, dramatic product photography lighting",
                 tags: ["赛博格", "机械", "义体"]
             },
@@ -569,7 +991,7 @@
                 id: 16,
                 title: "和风妖怪浮世绘",
                 category: "illustration",
-                categoryName: "插画风格",
+                image: "https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=800&h=500&fit=crop",
                 text: "Japanese ukiyo-e style illustration of mythical yokai spirits, traditional woodblock print aesthetic, mount fuji background, cherry blossoms, ghostly apparition, Edo period art revival",
                 tags: ["浮世绘", "妖怪", "和风"]
             },
@@ -577,7 +999,7 @@
                 id: 17,
                 title: "深海潜水艇内部",
                 category: "concept",
-                categoryName: "概念艺术",
+                image: "https://images.unsplash.com/photo-1551244072-5d12893278ab?w=800&h=500&fit=crop",
                 text: "Interior concept art of a submarine control room, vintage nautical equipment, analog gauges, flickering emergency lights, porthole showing deep ocean darkness, dramatic chiaroscuro lighting",
                 tags: ["潜水艇", "深海", "复古科幻"]
             },
@@ -585,7 +1007,7 @@
                 id: 18,
                 title: "液态金属变形",
                 category: "abstract",
-                categoryName: "抽象艺术",
+                image: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=800&h=500&fit=crop",
                 text: "Abstract visualization of liquid metal morphing, mercury-like surface, reflective chrome, morphing organic shapes, dark background, high contrast, minimalist composition",
                 tags: ["液态", "金属", "变形"]
             },
@@ -593,7 +1015,7 @@
                 id: 19,
                 title: "野生动物特写",
                 category: "photorealistic",
-                categoryName: "写实摄影",
+                image: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&h=500&fit=crop",
                 text: "Wild lion portrait close-up, golden savanna background, intense eyes, detailed mane texture, natural warm lighting, captured with 600mm telephoto lens, wildlife photography award style",
                 tags: ["狮子", "野生动物", "自然"]
             },
@@ -601,14 +1023,32 @@
                 id: 20,
                 title: "樱花树下的猫",
                 category: "anime",
-                categoryName: "动漫风格",
+                image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&h=500&fit=crop",
                 text: "Anime illustration of a fluffy cat sitting under a blooming cherry blossom tree, falling petals, soft pink and white color palette, kawaii style, Studio Ghibli influenced, peaceful spring scene",
                 tags: ["猫", "樱花", "可爱"]
             }
         ];
 
+        let prompts = [];
         let currentFilter = 'all';
         let searchQuery = '';
+        let editingId = null;
+
+        function loadPrompts() {
+            const stored = localStorage.getItem('promptworld_prompts');
+            if (stored) {
+                prompts = JSON.parse(stored);
+            } else {
+                prompts = [...DEFAULT_PROMPTS];
+                savePrompts();
+            }
+            document.getElementById('promptCount').textContent = prompts.length;
+        }
+
+        function savePrompts() {
+            localStorage.setItem('promptworld_prompts', JSON.stringify(prompts));
+            document.getElementById('promptCount').textContent = prompts.length;
+        }
 
         function renderPrompts() {
             const grid = document.getElementById('promptGrid');
@@ -619,7 +1059,7 @@
                 const matchesSearch = searchQuery === '' ||
                     prompt.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                     prompt.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    prompt.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+                    (prompt.tags && prompt.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())));
                 return matchesFilter && matchesSearch;
             });
 
@@ -632,20 +1072,24 @@
             emptyState.style.display = 'none';
             grid.innerHTML = filtered.map(prompt => `
                 <article class="prompt-card" data-id="${prompt.id}">
-                    <div class="prompt-card-header">
-                        <span class="prompt-category">
-                            <i data-lucide="tag" style="width:12px;height:12px;"></i>
-                            ${prompt.categoryName}
-                        </span>
-                        <button class="copy-btn" onclick="event.stopPropagation(); copyPrompt(${prompt.id})">
-                            <i data-lucide="copy" style="width:16px;height:16px;"></i>
-                            <span>复制</span>
-                        </button>
-                    </div>
-                    <h3 class="prompt-title">${prompt.title}</h3>
-                    <div class="prompt-text">${prompt.text}</div>
-                    <div class="prompt-tags">
-                        ${prompt.tags.map(tag => `<span class="prompt-tag">#${tag}</span>`).join('')}
+                    <img class="prompt-image" src="${prompt.image || 'https://picsum.photos/800/500?grayscale'}" alt="${prompt.title}"
+                         onerror="this.src='https://picsum.photos/800/500?grayscale'">
+                    <div class="prompt-card-body">
+                        <div class="prompt-card-header">
+                            <span class="prompt-category">
+                                <i data-lucide="tag" style="width:12px;height:12px;"></i>
+                                ${CATEGORY_NAMES[prompt.category] || prompt.category}
+                            </span>
+                            <button class="copy-btn" onclick="event.stopPropagation(); copyPrompt(${prompt.id})">
+                                <i data-lucide="copy" style="width:14px;height:14px;"></i>
+                                <span>复制</span>
+                            </button>
+                        </div>
+                        <h3 class="prompt-title">${prompt.title}</h3>
+                        <div class="prompt-text">${prompt.text}</div>
+                        <div class="prompt-tags">
+                            ${(prompt.tags || []).map(tag => `<span class="prompt-tag">#${tag}</span>`).join('')}
+                        </div>
                     </div>
                 </article>
             `).join('');
@@ -658,10 +1102,11 @@
             if (!prompt) return;
 
             navigator.clipboard.writeText(prompt.text).then(() => {
-                const btn = document.querySelector(`[data-id="${id}"] .copy-btn`);
+                const btn = document.querySelector(`.prompt-card[data-id="${id}"] .copy-btn`);
+                if (!btn) return;
                 btn.classList.add('copied');
                 btn.innerHTML = `
-                    <i data-lucide="check" style="width:16px;height:16px;"></i>
+                    <i data-lucide="check" style="width:14px;height:14px;"></i>
                     <span>已复制</span>
                 `;
                 lucide.createIcons();
@@ -671,7 +1116,7 @@
                 setTimeout(() => {
                     btn.classList.remove('copied');
                     btn.innerHTML = `
-                        <i data-lucide="copy" style="width:16px;height:16px;"></i>
+                        <i data-lucide="copy" style="width:14px;height:14px;"></i>
                         <span>复制</span>
                     `;
                     lucide.createIcons();
@@ -683,6 +1128,122 @@
             const toast = document.getElementById('toast');
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Admin Panel
+        function openAdminPanel() {
+            document.getElementById('adminModal').classList.add('show');
+            renderAdminList();
+            switchTab('list');
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminModal').classList.remove('show');
+            editingId = null;
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+            document.getElementById('listTab').style.display = tab === 'list' ? 'block' : 'none';
+            document.getElementById('addTab').style.display = tab === 'add' ? 'block' : 'none';
+            document.getElementById('editTabContent').style.display = tab === 'edit' ? 'block' : 'none';
+            document.getElementById('editTab').style.display = tab === 'edit' ? 'inline-block' : 'none';
+        }
+
+        function renderAdminList() {
+            const list = document.getElementById('adminPromptList');
+            list.innerHTML = prompts.map(prompt => `
+                <div class="prompt-list-item">
+                    <img class="prompt-list-thumb" src="${prompt.image || 'https://picsum.photos/160/100?grayscale'}" alt=""
+                         onerror="this.src='https://picsum.photos/160/100?grayscale'">
+                    <div class="prompt-list-info">
+                        <div class="prompt-list-title">${prompt.title}</div>
+                        <div class="prompt-list-category">${CATEGORY_NAMES[prompt.category] || prompt.category}</div>
+                    </div>
+                    <div class="prompt-list-actions">
+                        <button class="btn-edit" onclick="editPrompt(${prompt.id})">编辑</button>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function editPrompt(id) {
+            const prompt = prompts.find(p => p.id === id);
+            if (!prompt) return;
+
+            editingId = id;
+            switchTab('edit');
+
+            document.getElementById('editId').value = id;
+            document.getElementById('editImage').value = prompt.image || '';
+            document.getElementById('editTitle').value = prompt.title;
+            document.getElementById('editCategory').value = prompt.category;
+            document.getElementById('editText').value = prompt.text;
+            document.getElementById('editTags').value = (prompt.tags || []).join(', ');
+        }
+
+        function deletePrompt() {
+            if (!editingId) return;
+            if (!confirm('确定要删除这个提示词吗？')) return;
+
+            prompts = prompts.filter(p => p.id !== editingId);
+            savePrompts();
+            renderPrompts();
+            closeAdminPanel();
+            showToastMessage('已删除');
+        }
+
+        // Form Handlers
+        document.getElementById('addForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const newPrompt = {
+                id: Date.now(),
+                title: document.getElementById('addTitle').value,
+                category: document.getElementById('addCategory').value,
+                image: document.getElementById('addImage').value,
+                text: document.getElementById('addText').value,
+                tags: document.getElementById('addTags').value.split(',').map(t => t.trim()).filter(t => t)
+            };
+
+            prompts.unshift(newPrompt);
+            savePrompts();
+            renderPrompts();
+
+            e.target.reset();
+            showToastMessage('添加成功');
+        });
+
+        document.getElementById('editForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const id = parseInt(document.getElementById('editId').value);
+            const index = prompts.findIndex(p => p.id === id);
+            if (index === -1) return;
+
+            prompts[index] = {
+                id: id,
+                title: document.getElementById('editTitle').value,
+                category: document.getElementById('editCategory').value,
+                image: document.getElementById('editImage').value,
+                text: document.getElementById('editText').value,
+                tags: document.getElementById('editTags').value.split(',').map(t => t.trim()).filter(t => t)
+            };
+
+            savePrompts();
+            renderPrompts();
+            closeAdminPanel();
+            showToastMessage('保存成功');
+        });
+
+        function showToastMessage(msg) {
+            const toast = document.getElementById('toast');
+            toast.querySelector('span').textContent = msg;
+            showToast();
+            setTimeout(() => toast.querySelector('span').textContent = '已复制到剪贴板', 3000);
         }
 
         // Event Listeners
@@ -700,8 +1261,16 @@
             renderPrompts();
         });
 
+        // Close modal on overlay click
+        document.getElementById('adminModal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeAdminPanel();
+            }
+        });
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            loadPrompts();
             renderPrompts();
             lucide.createIcons();
         });
