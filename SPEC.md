@@ -170,7 +170,7 @@
 {
   id: Number,           // 唯一ID
   title: String,        // 标题 ⭐必填
-  category: String,     // 风格分类: photorealistic/anime/digital/illustration/concept/abstract
+  category: String,     // 情绪氛围: fresh/active/humor/professional/cozy/relaxed/healing/luxurious/cool/romantic
   imageType: String,    // 图片类型: 人物写实/场景写实/动漫图/信息图/插画图/海报图/创意图
   image: String,        // 图片URL或Base64 (粘贴上传自动转Base64)
   imageWidth: Number,    // 图片原始宽度 (用于瀑布流高度计算)
@@ -198,16 +198,20 @@
 
 ## 4. Content Specification
 
-### 4.1 Categories (风格分类)
+### 4.1 Mood/Style (情绪氛围)
 
 | Key | 中文名 | 英文名 |
 |-----|--------|--------|
-| photorealistic | 写实摄影 | Photorealistic |
-| anime | 动漫风格 | Anime |
-| digital | 数字艺术 | Digital Art |
-| illustration | 插画风格 | Illustration |
-| concept | 概念艺术 | Concept Art |
-| abstract | 抽象艺术 | Abstract |
+| fresh | 清新 | Fresh |
+| active | 活泼 | Active |
+| humor | 幽默 | Humor |
+| professional | 专业 | Professional |
+| cozy | 温馨 | Cozy |
+| relaxed | 松弛 | Relaxed |
+| healing | 治愈 | Healing |
+| luxurious | 高端 | Luxurious |
+| cool | 酷炫 | Cool |
+| romantic | 浪漫 | Romantic |
 
 ### 4.2 Image Types (图片类型)
 
