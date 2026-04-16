@@ -782,6 +782,7 @@
         function savePrompts() {
             try {
                 const data = JSON.stringify(prompts);
+                console.log('保存数据大小:', data.length, '字节');
                 // Check size (localStorage typically has 5MB limit)
                 if (data.length > 4.5 * 1024 * 1024) {
                     showToast('数据过大，请压缩图片或减少内容');
