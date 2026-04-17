@@ -456,10 +456,11 @@
                                 <label>情绪氛围</label>
                                 <select id="addCategory">
                                     <option value="fresh">清新</option><option value="active">活泼</option>
-                                    <option value="humor">幽默</option><option value="professional">专业</option>
-                                    <option value="cozy">温馨</option><option value="relaxed">松弛</option>
-                                    <option value="healing">治愈</option><option value="luxurious">高端</option>
+                                    <option value="simple">简约</option><option value="professional">专业</option>
+                                    <option value="cozy">温馨</option><option value="vintage">复古</option>
+                                    <option value="healing">治愈</option><option value="luxurious">高级</option>
                                     <option value="cool">酷炫</option><option value="romantic">浪漫</option>
+                                    <option value="artistic">文艺</option>
                                 </select>
                             </div>
                         </div>
@@ -469,7 +470,7 @@
                                 <select id="addImageType">
                                     <option value="人物写实">人物写实</option><option value="场景写实">场景写实</option>
                                     <option value="动漫图">动漫图</option><option value="信息图">信息图</option>
-                                    <option value="插画图">插画图</option><option value="海报图">海报图</option>
+                                    <option value="手绘图">手绘图</option><option value="海报图">海报图</option>
                                     <option value="创意图">创意图</option>
                                 </select>
                             </div>
@@ -486,10 +487,10 @@
                                 <option value="教育">教育</option><option value="金融">金融</option>
                                 <option value="旅游">旅游</option><option value="家装">家装</option>
                                 <option value="电商">电商</option><option value="快消">快消</option>
-                                <option value="美妆">美妆</option><option value="医美">医美</option>
-                                <option value="汽车">汽车</option><option value="房产">房产</option>
+                                <option value="美妆">美妆</option><option value="医药">医药</option>
                                 <option value="娱乐">娱乐</option><option value="资讯">资讯</option>
-                                <option value="科技">科技</option>
+                                <option value="科技">科技</option><option value="商务">商务</option>
+                                <option value="生活服务">生活服务</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -549,10 +550,11 @@
                                 <label>情绪氛围</label>
                                 <select id="editCategory">
                                     <option value="fresh">清新</option><option value="active">活泼</option>
-                                    <option value="humor">幽默</option><option value="professional">专业</option>
-                                    <option value="cozy">温馨</option><option value="relaxed">松弛</option>
-                                    <option value="healing">治愈</option><option value="luxurious">高端</option>
+                                    <option value="simple">简约</option><option value="professional">专业</option>
+                                    <option value="cozy">温馨</option><option value="vintage">复古</option>
+                                    <option value="healing">治愈</option><option value="luxurious">高级</option>
                                     <option value="cool">酷炫</option><option value="romantic">浪漫</option>
+                                    <option value="artistic">文艺</option>
                                 </select>
                             </div>
                         </div>
@@ -562,7 +564,7 @@
                                 <select id="editImageType">
                                     <option value="人物写实">人物写实</option><option value="场景写实">场景写实</option>
                                     <option value="动漫图">动漫图</option><option value="信息图">信息图</option>
-                                    <option value="插画图">插画图</option><option value="海报图">海报图</option>
+                                    <option value="手绘图">手绘图</option><option value="海报图">海报图</option>
                                     <option value="创意图">创意图</option>
                                 </select>
                             </div>
@@ -579,10 +581,10 @@
                                 <option value="教育">教育</option><option value="金融">金融</option>
                                 <option value="旅游">旅游</option><option value="家装">家装</option>
                                 <option value="电商">电商</option><option value="快消">快消</option>
-                                <option value="美妆">美妆</option><option value="医美">医美</option>
-                                <option value="汽车">汽车</option><option value="房产">房产</option>
+                                <option value="美妆">美妆</option><option value="医药">医药</option>
                                 <option value="娱乐">娱乐</option><option value="资讯">资讯</option>
-                                <option value="科技">科技</option>
+                                <option value="科技">科技</option><option value="商务">商务</option>
+                                <option value="生活服务">生活服务</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -623,10 +625,28 @@
     </div>
 
     <script>
+        // AI Configuration
+        const AI_CONFIG = {
+            provider: 'deepseek',
+            apiKey: 'sk-a378d1bc659f458a95f2c15c46fc0ad3',
+            model: 'deepseek-chat',
+            baseUrl: 'https://api.deepseek.com/v1',
+            prompts: {
+                generateTags: `你是一个AI绘图标签专家。根据用户提供的提示词，生成5-8个相关的中文标签。
+标签要简洁、有吸引力、适合作为设计平台的标签。
+直接返回标签，用逗号分隔，不需要解释。`,
+                optimizePrompt: `你是一个AI绘图提示词优化专家。将用户提供的提示词进行结构化精简：
+1. 保留核心关键词和风格描述
+2. 去除冗余词汇和重复内容
+3. 用中文返回精炼的提示词
+直接返回优化结果，不需要解释。`
+            }
+        };
+
         const CATEGORY_NAMES = {
-            fresh: '清新', active: '活泼', humor: '幽默', professional: '专业',
-            cozy: '温馨', relaxed: '松弛', healing: '治愈', luxurious: '高端',
-            cool: '酷炫', romantic: '浪漫'
+            fresh: '清新', active: '活泼', simple: '简约', professional: '专业',
+            cozy: '温馨', vintage: '复古', healing: '治愈', luxurious: '高级',
+            cool: '酷炫', romantic: '浪漫', artistic: '文艺'
         };
 
         const SAMPLE_PROMPTS = [
@@ -1170,29 +1190,95 @@
         setupImageUpload('addImageInput', 'addImageUrl', 'addImageArea');
         setupImageUpload('editImageInput', 'editImageUrl', 'editImageArea');
 
-        // AI Functions (simulated)
-        function generateTags() {
-            const text = document.getElementById('addText').value;
-            if (!text) { showToast('请先输入原始提示词'); return; }
+        // AI Functions (DeepSeek)
+        async function callAI(messages) {
+            try {
+                const response = await fetch(`${AI_CONFIG.baseUrl}/chat/completions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${AI_CONFIG.apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: AI_CONFIG.model,
+                        messages: messages,
+                        temperature: 0.7,
+                        max_tokens: 500
+                    })
+                });
 
-            const tagSets = [
-                ["创意", "艺术", "梦幻", "ins风", "高级感", "小众", "氛围感", "极简"],
-                ["温暖", "治愈", "放松", "舒适", "自然", "清新", "活力", "阳光"],
-                ["专业", "商务", "高端", "品质", "精致", "时尚", "潮流", "前卫"]
-            ];
-            const randomTags = tagSets[Math.floor(Math.random() * tagSets.length)].slice(0, 4);
-            document.getElementById('addTags').value = randomTags.join(', ');
-            showToast('标签已生成');
+                if (!response.ok) {
+                    const err = await response.json().catch(() => ({}));
+                    throw new Error(err.error?.message || `API错误: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.choices[0]?.message?.content || '';
+            } catch (err) {
+                console.error('AI调用失败:', err);
+                throw err;
+            }
         }
 
-        function optimizePrompt() {
+        async function generateTags() {
             const text = document.getElementById('addText').value;
-            if (!text) { showToast('请先输入原始提示词'); return; }
+            if (!text.trim()) {
+                showToast('请先输入原始提示词');
+                return;
+            }
 
-            const words = text.split(/[,\s]+/).filter(w => w.length > 3).slice(0, 8);
-            const optimized = words.map(w => w.replace(/[^a-zA-Z\u4e00-\u9fa5]/g, '')).filter(w => w).join(', ');
-            document.getElementById('addTextOptimized').value = optimized || '简洁关键词, 核心元素, 风格描述';
-            showToast('提示词已优化');
+            const btn = event.target;
+            btn.disabled = true;
+            btn.innerHTML = '<i data-lucide="loader" style="width:16px;height:16px;" class="spin"></i> 生成中...';
+            lucide.createIcons();
+
+            try {
+                const messages = [
+                    { role: 'system', content: AI_CONFIG.prompts.generateTags },
+                    { role: 'user', content: `根据这个提示词生成标签：${text}` }
+                ];
+
+                const result = await callAI(messages);
+                const tags = result.replace(/[#\n]/g, '').trim().split(/[,，]/).slice(0, 8).map(t => t.trim()).filter(t => t);
+                document.getElementById('addTags').value = tags.join(', ');
+                showToast('标签生成成功');
+            } catch (err) {
+                showToast('生成失败: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="sparkles" style="width:16px;height:16px;"></i> AI生成标签';
+                lucide.createIcons();
+            }
+        }
+
+        async function optimizePrompt() {
+            const text = document.getElementById('addText').value;
+            if (!text.trim()) {
+                showToast('请先输入原始提示词');
+                return;
+            }
+
+            const btn = event.target;
+            btn.disabled = true;
+            btn.innerHTML = '<i data-lucide="loader" style="width:16px;height:16px;" class="spin"></i> 优化中...';
+            lucide.createIcons();
+
+            try {
+                const messages = [
+                    { role: 'system', content: AI_CONFIG.prompts.optimizePrompt },
+                    { role: 'user', content: `优化这个提示词：${text}` }
+                ];
+
+                const result = await callAI(messages);
+                document.getElementById('addTextOptimized').value = result.trim();
+                showToast('提示词优化成功');
+            } catch (err) {
+                showToast('优化失败: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="sparkles" style="width:16px;height:16px;"></i> AI优化提示词';
+                lucide.createIcons();
+            }
         }
 
         // Form handlers
