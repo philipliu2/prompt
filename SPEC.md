@@ -7,6 +7,7 @@
 **核心功能**: 展示、浏览、复制文生图提示词，支持提示词录入和 AI 优化
 **目标用户**: AI绘图爱好者、设计师、内容创作者
 **部署方式**: GitHub Pages
+**线上地址**: https://philipliu2.github.io/prompt/
 
 ---
 
@@ -14,11 +15,11 @@
 
 ### 2.1 Layout Structure
 
-| 页面 | 功能 |
-|------|------|
-| **首页** | 瀑布流展示提示词卡片，支持筛选、搜索 |
-| **详情页** | 全屏展示卡片大图 + 完整提示词信息 |
-| **管理后台** | 录入、编辑、删除提示词 |
+| 页面 | 功能 | URL |
+|------|------|-----|
+| **首页** | 瀑布流展示提示词卡片，支持筛选、搜索 | `/` |
+| **详情页** | 全屏展示卡片大图 + 完整提示词信息 | `/?detail=id` |
+| **管理后台** | 录入、编辑、删除提示词 | 弹窗 Modal |
 
 ### 2.2 Color Palette
 
@@ -139,60 +140,72 @@
 
 ## 3. Functionality Specification
 
-### 3.1 Core Features
+### 3.1 Core Features (已实现)
 
-| 功能 | 描述 |
-|------|------|
-| **瀑布流展示** | 固定宽度卡片，图片高度根据原始比例动态调整 |
-| **风格筛选** | 按 6 种风格分类筛选提示词 |
-| **关键词搜索** | 搜索标题、标签、行业、来源 |
-| **一键复制** | 复制原始提示词或优化后提示词 |
-| **点赞功能** | 点击心形图标点赞/取消点赞，显示点赞数 |
-| **详情页** | 点击卡片进入详情，展示完整信息 |
-| **Dark Mode** | 浅色/深色主题切换 |
-| **管理后台** | 添加/编辑/删除提示词 |
-| **AI 优化** | 自动生成结构化精简的优化提示词 |
-| **AI 生成标签** | 根据提示词内容自动生成相关标签 |
+| 功能 | 状态 | 描述 |
+|------|------|------|
+| **瀑布流展示** | ✅ 已完成 | 固定宽度卡片，图片高度根据原始比例动态调整 |
+| **风格筛选** | ✅ 已完成 | 按 10 种情绪氛围分类筛选提示词 |
+| **关键词搜索** | ✅ 已完成 | 搜索标题、标签、行业、来源，300ms 防抖 |
+| **一键复制** | ✅ 已完成 | 复制原始提示词或优化后提示词 |
+| **点赞功能** | ✅ 已完成 | 点击心形图标点赞/取消点赞，本地存储 |
+| **详情页** | ✅ 已完成 | 点击卡片进入详情，展示完整信息 |
+| **Dark Mode** | ✅ 已完成 | 浅色/深色主题切换，localStorage 记忆 |
+| **管理后台** | ✅ 已完成 | 添加/编辑/删除提示词 |
+| **AI 优化** | ✅ 已完成 | 调用 DeepSeek LLM 生成优化提示词 |
+| **AI 生成标签** | ✅ 已完成 | 调用 DeepSeek LLM 自动生成标签 |
+| **图片上传** | ✅ 已完成 | 支持 URL 输入和粘贴图片 |
 
 ### 3.2 User Interactions
 
 | 交互 | 行为 |
 |------|------|
 | 点击卡片 | 跳转到详情页 |
-| 点击复制按钮 | 复制提示词，显示"已复制"反馈 |
+| 点击复制按钮 | 复制提示词，显示 Toast 反馈 |
 | 筛选标签点击 | 过滤显示对应分类 |
 | 搜索输入 | 实时搜索，300ms 防抖 |
 | 悬停卡片 | 轻微上浮 + 阴影加深 |
+| 点击心形图标 | 切换点赞状态，不跳转详情页 |
+| 点击返回 | 关闭详情页，回到列表 |
 
 ### 3.3 Data Model
 
 ```javascript
 {
-  id: Number,           // 唯一ID
+  id: Number,           // 唯一ID (时间戳)
   title: String,        // 标题 ⭐必填
   category: String,     // 情绪氛围: fresh/active/humor/professional/cozy/relaxed/healing/luxurious/cool/romantic
   imageType: String,    // 图片类型: 人物写实/场景写实/动漫图/信息图/插画图/海报图/创意图
-  image: String,        // 图片URL或Base64 (粘贴上传自动转Base64)
-  imageWidth: Number,    // 图片原始宽度 (用于瀑布流高度计算)
-  imageHeight: Number,  // 图片原始高度
-  source: String,       // 作者/创作者名字
-  industry: String,     // 广告主行业: 游戏/网服/教育/金融/旅游/家装等
-  clickRate: String,    // 点击率: "8.5%"
-  rating: Number,       // 星级: 1-5
-  likes: Number,        // 点赞数
-  likedByMe: Boolean,   // 我是否点赞过 (本地存储)
-  tags: String[],       // 标签数组
-  text: String,         // 原始提示词 ⭐必填
-  textOptimized: String, // AI优化后的提示词
-  createdAt: Number     // 创建时间戳
+  image: String,        // 图片URL或Base64
+  imageWidth: Number,   // 图片原始宽度 (用于瀑布流高度计算)
+  imageHeight: Number,   // 图片原始高度
+  source: String,        // 作者/创作者名字
+  industry: String,      // 广告主行业
+  clickRate: String,     // 点击率: "8.5%"
+  rating: Number,        // 星级: 1-5
+  likes: Number,         // 点赞数
+  likedByMe: Boolean,     // 我是否点赞过 (本地存储)
+  tags: String[],        // 标签数组
+  text: String,           // 原始提示词 ⭐必填
+  textOptimized: String,  // AI优化后的提示词
+  createdAt: Number        // 创建时间戳
 }
 ```
 
 ### 3.4 Storage
 
 - **前端存储**: localStorage
-- **Key**: `promptworld_prompts`
+- **Keys**:
+  - `promptworld_prompts` - 提示词数据
+  - `promptworld_likes` - 点赞状态映射
+  - `promptworld_theme` - 主题偏好
 - **容量**: 约 2MB (适合少量数据)
+
+### 3.5 AI Integration
+
+- **Provider**: DeepSeek LLM (siliconflow API)
+- **Endpoint**: `https://api.deepseek.com/chat/completions`
+- **Model**: `deepseek-ai/DeepSeek-V3`
 
 ---
 
@@ -225,7 +238,7 @@
 | 海报图 | Poster |
 | 创意图 | 概念/抽象/数字艺术等 Creative |
 
-### 4.3 Industries (行业) - 广告主行业
+### 4.3 Industries (行业)
 
 游戏、网服、教育、金融、旅游、家装、电商、快消、美妆、医美、汽车、房产、娱乐、资讯、科技
 
@@ -243,6 +256,8 @@
 | Google Fonts | Inter + JetBrains Mono |
 | Lucide Icons | 图标库 (CDN) |
 | localStorage | 数据持久化 |
+| DeepSeek LLM | AI 优化和标签生成 |
+| jsdelivr CDN | 图片资源加速 (GitHub CDN) |
 
 ### 5.2 File Structure
 
@@ -277,13 +292,36 @@ cardRowSpan = Math.ceil((cardImageHeight + otherElementsHeight) / rowHeight);
 
 ---
 
-## 7. TODO
+## 7. Deployment
 
-- [ ] 实现瀑布流布局
-- [ ] 实现详情页
-- [ ] 实现图片上传 (URL/粘贴)
-- [ ] 实现点赞功能
-- [ ] 实现 AI 优化提示词功能
-- [ ] 实现 AI 生成标签功能
-- [ ] 更新管理后台表单
-- [ ] 响应式适配
+### 7.1 GitHub Pages
+
+- **Repository**: https://github.com/philipliu2/prompt
+- **Pages URL**: https://philipliu2.github.io/prompt/
+- **Branch**: master
+- **Source**: / (root)
+
+### 7.2 Image Hosting
+
+- **Provider**: jsdelivr (GitHub CDN)
+- **Format**: `https://cdn.jsdelivr.net/gh/philipliu2/images/img/文件名`
+
+---
+
+## 8. Change Log
+
+### 2026-04-17
+- 完成 AI 优化提示词功能 (DeepSeek LLM)
+- 完成 AI 生成标签功能
+- 更新管理后台表单，支持 AI 辅助
+- 修复 SAMPLE_PROMPTS 数组格式问题
+- 添加 118 个示例提示词
+
+### 初始版本
+- 实现瀑布流展示
+- 实现风格筛选
+- 实现关键词搜索
+- 实现点赞功能
+- 实现详情页
+- 实现 Dark Mode
+- 实现管理后台 (添加/编辑/删除)
