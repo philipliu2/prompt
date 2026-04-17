@@ -174,8 +174,8 @@
 {
   id: Number,           // 唯一ID (时间戳)
   title: String,        // 标题 ⭐必填
-  category: String,     // 情绪氛围: fresh/active/humor/professional/cozy/relaxed/healing/luxurious/cool/romantic
-  imageType: String,    // 图片类型: 人物写实/场景写实/动漫图/信息图/插画图/海报图/创意图
+  category: String,     // 情绪氛围: fresh/active/simple/professional/cozy/vintage/healing/luxurious/cool/romantic/artistic
+  imageType: String,    // 图片类型: 人物写实/场景写实/动漫图/信息图/手绘图/海报图/创意图
   image: String,        // 图片URL或Base64
   imageWidth: Number,   // 图片原始宽度 (用于瀑布流高度计算)
   imageHeight: Number,   // 图片原始高度
@@ -217,30 +217,47 @@
 |-----|--------|--------|
 | fresh | 清新 | Fresh |
 | active | 活泼 | Active |
-| humor | 幽默 | Humor |
+| simple | 简约 | Simple |
 | professional | 专业 | Professional |
 | cozy | 温馨 | Cozy |
-| relaxed | 松弛 | Relaxed |
+| vintage | 复古 | Vintage |
 | healing | 治愈 | Healing |
-| luxurious | 高端 | Luxurious |
+| luxurious | 高级 | Luxurious |
 | cool | 酷炫 | Cool |
 | romantic | 浪漫 | Romantic |
+| artistic | 文艺 | Artistic |
 
 ### 4.2 Image Types (图片类型)
 
-| 中文名 | 说明 |
-|--------|------|
-| 人物写实 | Photorealistic Portrait |
-| 场景写实 | Photorealistic Scene/Landscape |
-| 动漫图 | Anime/Cartoon |
-| 信息图 | Infographic |
-| 插画图 | Illustration |
-| 海报图 | Poster |
-| 创意图 | 概念/抽象/数字艺术等 Creative |
+| Key | 中文名 | 说明 |
+|-----|--------|------|
+| 人物写实 | 人物写实 | Photorealistic Portrait |
+| 场景写实 | 场景写实 | Photorealistic Scene/Landscape |
+| 动漫图 | 动漫图 | Anime/Cartoon |
+| 信息图 | 信息图 | Infographic |
+| 手绘图 | 手绘图 | Hand-drawn |
+| 海报图 | 海报图 | Poster |
+| 创意图 | 创意图 | Creative |
 
 ### 4.3 Industries (行业)
 
-游戏、网服、教育、金融、旅游、家装、电商、快消、美妆、医美、汽车、房产、娱乐、资讯、科技
+游戏、网服、教育、金融、旅游、家装、电商、快消、美妆、医药、娱乐、资讯、科技、商务、生活服务
+
+### 4.4 Category to ImageType Mapping
+
+| Category (情绪) | 适合的 ImageType |
+|-----------------|-----------------|
+| fresh (清新) | 场景写实、创意图 |
+| active (活泼) | 信息图、动漫图、手绘图 |
+| simple (简约) | 海报图、创意图 |
+| professional (专业) | 信息图、人物写实 |
+| cozy (温馨) | 场景写实、手绘图 |
+| vintage (复古) | 场景写实、创意图 |
+| healing (治愈) | 场景写实、手绘图 |
+| luxurious (高级) | 人物写实、场景写实 |
+| cool (酷炫) | 场景写实、创意图 |
+| romantic (浪漫) | 人物写实、场景写实 |
+| artistic (文艺) | 手绘图、创意图 |
 
 ---
 

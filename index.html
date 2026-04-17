@@ -304,6 +304,11 @@
         .image-upload-hint { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 6px; }
 
         /* Admin List */
+        .admin-list-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 0; margin-bottom: 8px; border-bottom: 1px solid var(--border);
+        }
+        .admin-list-header span { font-size: 0.9rem; color: var(--text-secondary); }
         .admin-list { display: flex; flex-direction: column; gap: 10px; }
         .admin-item {
             display: flex; align-items: center; gap: 12px; padding: 10px;
@@ -422,7 +427,13 @@
             </div>
             <div class="modal-body">
                 <!-- List Tab -->
-                <div id="listTab"><div class="admin-list" id="adminList"></div></div>
+                <div id="listTab">
+                    <div class="admin-list-header">
+                        <span id="adminListCount">共 0 个提示词</span>
+                        <button class="btn btn-secondary" onclick="exportPromptsForCode()">📋 导出代码</button>
+                    </div>
+                    <div class="admin-list" id="adminList"></div>
+                </div>
                 <!-- Add Tab -->
                 <div id="addTab" style="display:none;">
                     <form id="addForm">
@@ -991,6 +1002,7 @@
             document.getElementById('adminModal').classList.add('show');
             switchTab('list');
             renderAdminList();
+            updateAdminListCount();
         }
 
         function closeAdminModal() {
@@ -1006,6 +1018,41 @@
                     editPrompt(currentDetailId);
                 }
             }, 100);
+        }
+
+        function exportPromptsForCode() {
+            const esc = s => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, ' ');
+            const lines = prompts.map(p => {
+                const parts = [];
+                parts.push(`id: ${p.id}`);
+                parts.push(`title: "${esc(p.title)}"`);
+                parts.push(`category: "${esc(p.category)}"`);
+                parts.push(`imageType: "${esc(p.imageType)}"`);
+                parts.push(`image: "${esc(p.image)}"`);
+                parts.push(`imageWidth: ${p.imageWidth || 800}`);
+                parts.push(`imageHeight: ${p.imageHeight || 600}`);
+                parts.push(`source: "${esc(p.source)}"`);
+                parts.push(`industry: "${esc(p.industry)}"`);
+                parts.push(`clickRate: "${esc(p.clickRate)}"`);
+                parts.push(`rating: ${p.rating || 0}`);
+                parts.push(`likes: ${p.likes || 0}`);
+                parts.push(`likedByMe: ${p.likedByMe ? 'true' : 'false'}`);
+                parts.push(`tags: ${JSON.stringify(p.tags || [])}`);
+                parts.push(`text: "${esc(p.text)}"`);
+                parts.push(`textOptimized: "${esc(p.textOptimized)}"`);
+                if (p.createdAt) parts.push(`createdAt: ${p.createdAt}`);
+                return '{ ' + parts.join(', ') + ' }';
+            });
+            const arrStr = 'const SAMPLE_PROMPTS = [\n            ' + lines.join(',\n            ') + '\n        ];';
+            navigator.clipboard.writeText(arrStr).then(() => {
+                showToast('已复制 ' + prompts.length + ' 个提示词到剪贴板');
+            }).catch(() => {
+                showToast('复制失败，请手动复制');
+            });
+        }
+
+        function updateAdminListCount() {
+            document.getElementById('adminListCount').textContent = '共 ' + prompts.length + ' 个提示词';
         }
 
         function switchTab(tab) {
@@ -1187,6 +1234,7 @@
                     showToast('添加成功');
                     switchTab('list');
                     renderAdminList();
+                    updateAdminListCount();
                 };
                 img.src = imgUrl;
             } else {
@@ -1200,6 +1248,7 @@
                 showToast('添加成功');
                 switchTab('list');
                 renderAdminList();
+                updateAdminListCount();
             }
         });
 
@@ -1230,6 +1279,7 @@
             showToast('保存成功');
             switchTab('list');
             renderAdminList();
+            updateAdminListCount();
         });
 
         document.getElementById('adminBtn').addEventListener('click', openAdminModal);
