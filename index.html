@@ -624,7 +624,6 @@
         </div>
     </div>
 
-    <script src="prompts.js?v=1"></script>
     <script>
         // AI Configuration
         const AI_CONFIG = {
@@ -657,11 +656,13 @@
         let searchQuery = '';
         let editingId = null;
         let currentDetailId = null;
+        let SAMPLE_PROMPTS = [];
 
-        function loadPrompts() {
+        async function loadPrompts() {
             const stored = localStorage.getItem('promptworld_prompts');
             const likesStored = localStorage.getItem('promptworld_likes') || '{}';
             const likesMap = JSON.parse(likesStored);
+
             if (stored) {
                 prompts = JSON.parse(stored).map(p => ({
                     ...p,
@@ -669,8 +670,16 @@
                     likes: p.likes || 0
                 }));
             } else {
-                prompts = SAMPLE_PROMPTS.map(p => ({...p, likedByMe: false}));
-                savePrompts();
+                // Load from prompts.json
+                try {
+                    const res = await fetch('prompts.json?v=1');
+                    SAMPLE_PROMPTS = await res.json();
+                    prompts = SAMPLE_PROMPTS.map(p => ({...p, likedByMe: false}));
+                    savePrompts();
+                } catch (e) {
+                    console.error('Failed to load prompts:', e);
+                    prompts = [];
+                }
             }
         }
 
