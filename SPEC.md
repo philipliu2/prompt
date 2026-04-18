@@ -15,11 +15,12 @@
 
 ### 2.1 Layout Structure
 
-| 页面 | 功能 | URL |
-|------|------|-----|
-| **首页** | 瀑布流展示提示词卡片，支持筛选、搜索 | `/` |
-| **详情页** | 全屏展示卡片大图 + 完整提示词信息 | `/?detail=id` |
-| **管理后台** | 录入、编辑、删除提示词 | 弹窗 Modal |
+| 页面       | 功能                 | URL           |
+| -------- | ------------------ | ------------- |
+| **首页**   | 瀑布流展示提示词卡片，支持筛选、搜索 | `/`           |
+| **详情页**  | 全屏展示卡片大图 + 完整提示词信息 | `/?detail=id` |
+| **管理后台** | 录入、编辑、删除提示词        | 弹窗 Modal      |
+| 导航       | 按照图片的类型导航          |               |
 
 ### 2.2 Color Palette
 
@@ -154,7 +155,6 @@
 | **管理后台**      | ✅ 已完成 | 添加/编辑/删除提示词               |
 | **AI 优化**     | ✅ 已完成 | 调用 DeepSeek LLM 生成优化提示词   |
 | **AI 生成标签**   | ✅ 已完成 | 调用 DeepSeek LLM 自动生成标签    |
-| **AI 能量值**    | ✅ 已完成 | 评估提示词视觉唤醒度 (1-5分)         |
 | **图片上传**      | ✅ 已完成 | 支持 URL 输入和粘贴图片            |
 
 ### 3.2 User Interactions
@@ -215,53 +215,54 @@
 
 ### 4.1 Mood/Style (情绪氛围)
 
-| Key | 中文名 | 英文名 |
-|-----|--------|--------|
-| fresh | 清新 | Fresh |
-| active | 活泼 | Active |
-| simple | 简约 | Simple |
-| professional | 专业 | Professional |
-| cozy | 温馨 | Cozy |
-| vintage | 复古 | Vintage |
-| healing | 治愈 | Healing |
-| luxurious | 高级 | Luxurious |
-| cool | 酷炫 | Cool |
-| romantic | 浪漫 | Romantic |
-| artistic | 文艺 | Artistic |
-| guochao | 国潮 | Guochao |
-| life | 生活 | Life |
+| Key          | 中文名 | 英文名          |
+| ------------ | --- | ------------ |
+| active       | 活泼  | Active       |
+| cool         | 酷炫  | Cool         |
+| guochao      | 国潮  | Guochao      |
+| fresh        | 清新  | Fresh        |
+| lifesense    | 生活  | Lifesense    |
+| healing      | 治愈  | Healing      |
+| romantic     | 浪漫  | Romantic     |
+| artistic     | 文艺  | Artistic     |
+| vintage      | 复古  | Vintage      |
+| simple       | 简约  | Simple       |
+| luxurious    | 高级  | Luxurious    |
+| professional | 专业  | Professional |
+
 
 ### 4.2 Image Types (图片类型)
 
-| Key | 中文名 | 说明 |
-|-----|--------|------|
-| 人物写实 | 人物写实 | Photorealistic Portrait |
+| Key  | 中文名  | 说明                             |
+| ---- | ---- | ------------------------------ |
+| 人物写实 | 人物写实 | Photorealistic Portrait        |
 | 场景写实 | 场景写实 | Photorealistic Scene/Landscape |
-| 动漫图 | 动漫图 | Anime/Cartoon |
-| 信息图 | 信息图 | Infographic |
-| 手绘图 | 手绘图 | Hand-drawn |
-| 海报图 | 海报图 | Poster |
-| 创意图 | 创意图 | Creative |
+| 动漫图  | 动漫图  | Anime/Cartoon                  |
+| 信息图  | 信息图  | Infographic                    |
+| 海报图  | 海报图  | Poster                         |
+| 文字图  | 文字图  | Pure text                      |
+| 创意图  | 创意图  | Creative                       |
 
 ### 4.3 Industries (行业)
 
-游戏、网服、教育、金融、旅游、家装、电商、快消、美妆、医药、娱乐、资讯、科技、商务、生活服务
+游戏、网服、教育、金融、旅游、家装、电商、个护、食品、医药、娱乐、文化、科技、商务、生活、运动
 
 ### 4.4 Category to ImageType Mapping
 
-| Category (情绪) | 适合的 ImageType |
-|-----------------|-----------------|
-| fresh (清新) | 场景写实、创意图 |
-| active (活泼) | 信息图、动漫图、手绘图 |
-| simple (简约) | 海报图、创意图 |
-| professional (专业) | 信息图、人物写实 |
-| cozy (温馨) | 场景写实、手绘图 |
-| vintage (复古) | 场景写实、创意图 |
-| healing (治愈) | 场景写实、手绘图 |
-| luxurious (高级) | 人物写实、场景写实 |
-| cool (酷炫) | 场景写实、创意图 |
-| romantic (浪漫) | 人物写实、场景写实 |
-| artistic (文艺) | 手绘图、创意图 |
+| Category (情绪)     | 适合的 ImageType |
+| ----------------- | ------------- |
+| fresh (清新)        | 场景写实、动漫图      |
+| active (活泼)       | 动漫图、创意图       |
+| simple (简约)       | 文字图、创意图       |
+| professional (专业) | 信息图、海报图       |
+| lifesense (生活)    | 人物写实、场景写实     |
+| vintage (复古)      | 场景写实、动漫图      |
+| healing (治愈)      | 场景写实、动漫图      |
+| luxurious (高级)    | 海报图、场景写实      |
+| cool (酷炫)         | 人物写实、创意图      |
+| romantic (浪漫)     | 人物写实、动漫图      |
+| artistic (文艺)     | 场景写实、创意图      |
+| guochao (国潮)      | 海报图、动漫图       |
 
 ---
 
