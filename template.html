@@ -370,18 +370,13 @@
             </div>
             <div class="filter-tabs" id="filterTabs">
                 <button class="filter-tab active" data-filter="all">全部</button>
-                <button class="filter-tab" data-filter="fresh">清新</button>
-                <button class="filter-tab" data-filter="active">活泼</button>
-                <button class="filter-tab" data-filter="cool">酷炫</button>
-                <button class="filter-tab" data-filter="guochao">国潮</button>
-                <button class="filter-tab" data-filter="lifesense">生活</button>
-                <button class="filter-tab" data-filter="healing">治愈</button>
-                <button class="filter-tab" data-filter="romantic">浪漫</button>
-                <button class="filter-tab" data-filter="artistic">文艺</button>
-                <button class="filter-tab" data-filter="simple">简约</button>
-                <button class="filter-tab" data-filter="luxurious">高级</button>
-                <button class="filter-tab" data-filter="professional">专业</button>
-                <button class="filter-tab" data-filter="vintage">复古</button>
+                <button class="filter-tab" data-filter="人物写实">人物写实</button>
+                <button class="filter-tab" data-filter="场景写实">场景写实</button>
+                <button class="filter-tab" data-filter="动漫图">动漫图</button>
+                <button class="filter-tab" data-filter="信息图">信息图</button>
+                <button class="filter-tab" data-filter="海报图">海报图</button>
+                <button class="filter-tab" data-filter="文字图">文字图</button>
+                <button class="filter-tab" data-filter="创意图">创意图</button>
             </div>
         </div>
     </div>
@@ -736,7 +731,7 @@
             const empty = document.getElementById('emptyState');
 
             const filtered = prompts.filter(p => {
-                const matchFilter = currentFilter === 'all' || p.category === currentFilter;
+                const matchFilter = currentFilter === 'all' || p.imageType === currentFilter;
                 const q = searchQuery.toLowerCase();
                 const matchSearch = !q ||
                     p.title.toLowerCase().includes(q) ||
@@ -1296,9 +1291,8 @@
         });
 
         // Init
-        loadPrompts();
         initTheme();
-        renderPrompts();
+        loadPrompts().then(() => renderPrompts());
         lucide.createIcons();
     </script>
 </body>
