@@ -460,7 +460,7 @@
                                     <option value="cozy">温馨</option><option value="vintage">复古</option>
                                     <option value="healing">治愈</option><option value="luxurious">高级</option>
                                     <option value="cool">酷炫</option><option value="romantic">浪漫</option>
-                                    <option value="artistic">文艺</option>
+                                    <option value="artistic">文艺</option><option value="guochao">国潮</option><option value="life">生活</option>
                                 </select>
                             </div>
                         </div>
@@ -523,6 +523,15 @@
                                     <option value="5">5星</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label>能量值</label>
+                                <select id="addEnergyRating">
+                                    <option value="">待评估</option>
+                                    <option value="1">⚡1 禅意</option><option value="2">⚡2 治愈</option>
+                                    <option value="3">⚡3 清新</option><option value="4">⚡4 活泼</option>
+                                    <option value="5">⚡5 炫酷</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">保存</button>
@@ -554,7 +563,7 @@
                                     <option value="cozy">温馨</option><option value="vintage">复古</option>
                                     <option value="healing">治愈</option><option value="luxurious">高级</option>
                                     <option value="cool">酷炫</option><option value="romantic">浪漫</option>
-                                    <option value="artistic">文艺</option>
+                                    <option value="artistic">文艺</option><option value="guochao">国潮</option><option value="life">生活</option>
                                 </select>
                             </div>
                         </div>
@@ -612,6 +621,15 @@
                                     <option value="5">5星</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label>能量值</label>
+                                <select id="editEnergyRating">
+                                    <option value="">待评估</option>
+                                    <option value="1">⚡1 禅意</option><option value="2">⚡2 治愈</option>
+                                    <option value="3">⚡3 清新</option><option value="4">⚡4 活泼</option>
+                                    <option value="5">⚡5 炫酷</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">保存</button>
@@ -639,14 +657,21 @@
 1. 保留核心关键词和风格描述
 2. 去除冗余词汇和重复内容
 3. 用中文返回精炼的提示词
-直接返回优化结果，不需要解释。`
+直接返回优化结果，不需要解释。`,
+                evaluateEnergy: `你是视觉能量专家，根据原始提示词评估视觉唤醒度（能量值）。
+1分：禅意、空寂、简约。色彩常用黑白，冷色，构图大面积留白
+2分：治愈、文艺，采用柔和，莫兰迪色系，线条圆润
+3分：专业、写实、生活、清新，构图标准，色彩自然，信息清晰
+4分：活泼、复古，高饱和色，动态构图，强光影
+5分：炫酷、国潮、撞色，超现实，视觉冲击力
+不解释，只返回1-5的数字。`
             }
         };
 
         const CATEGORY_NAMES = {
             fresh: '清新', active: '活泼', simple: '简约', professional: '专业',
             cozy: '温馨', vintage: '复古', healing: '治愈', luxurious: '高级',
-            cool: '酷炫', romantic: '浪漫', artistic: '文艺'
+            cool: '酷炫', romantic: '浪漫', artistic: '文艺', guochao: '国潮', life: '生活'
         };
 
         
@@ -808,6 +833,7 @@
                             <div class="detail-meta-item"><span class="detail-meta-label">作者</span><span class="detail-meta-value source">${p.source || '-'}</span></div>
                             <div class="detail-meta-item"><span class="detail-meta-label">点击率</span><span class="detail-meta-value click-rate">${p.clickRate || '-'}</span></div>
                             <div class="detail-meta-item"><span class="detail-meta-label">星级</span><span class="detail-stars">${renderStars(p.rating || 0, 16)}</span></div>
+                            ${p.energyRating ? `<div class="detail-meta-item"><span class="detail-meta-label">能量值</span><span class="detail-meta-value energy-value">⚡ ${p.energyRating}/5</span></div>` : ''}
                         </div>
                     </div>
                     <div class="detail-section">
@@ -1011,6 +1037,7 @@
             document.getElementById('editTags').value = (p.tags || []).join(', ');
             document.getElementById('editClickRate').value = p.clickRate || '';
             document.getElementById('editRating').value = p.rating || '';
+            document.getElementById('editEnergyRating').value = p.energyRating || '';
 
             const area = document.getElementById('editImageArea');
             if (p.image) {
@@ -1188,6 +1215,7 @@
                 industry: document.getElementById('addIndustry').value,
                 clickRate: document.getElementById('addClickRate').value,
                 rating: parseInt(document.getElementById('addRating').value) || 0,
+                energyRating: parseInt(document.getElementById('addEnergyRating').value) || 0,
                 likes: 0, likedByMe: false,
                 tags: document.getElementById('addTags').value.split(',').map(t => t.trim()).filter(t => t),
                 text: document.getElementById('addText').value,
@@ -1245,6 +1273,7 @@
                 industry: document.getElementById('editIndustry').value,
                 clickRate: document.getElementById('editClickRate').value,
                 rating: parseInt(document.getElementById('editRating').value) || 0,
+                energyRating: parseInt(document.getElementById('editEnergyRating').value) || 0,
                 tags: document.getElementById('editTags').value.split(',').map(t => t.trim()).filter(t => t),
                 text: document.getElementById('editText').value,
                 textOptimized: document.getElementById('editTextOptimized').value
