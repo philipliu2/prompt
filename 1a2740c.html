@@ -115,7 +115,7 @@
         }
         .prompt-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: transparent; }
 
-        .card-image { width: 100%; display: block; }
+        .card-image { width: 100%; height: auto; display: block; }
         .card-body { padding: 12px; }
         .card-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .card-title {
@@ -290,6 +290,13 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;
         }
         .btn-ai:hover { opacity: 0.9; }
+        .btn-ai:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin { animation: spin 1s linear infinite; }
 
         /* Image Upload Area */
         .image-upload-area {
@@ -304,11 +311,6 @@
         .image-upload-hint { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 6px; }
 
         /* Admin List */
-        .admin-list-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 8px 0; margin-bottom: 8px; border-bottom: 1px solid var(--border);
-        }
-        .admin-list-header span { font-size: 0.9rem; color: var(--text-secondary); }
         .admin-list { display: flex; flex-direction: column; gap: 10px; }
         .admin-item {
             display: flex; align-items: center; gap: 12px; padding: 10px;
@@ -370,16 +372,13 @@
             </div>
             <div class="filter-tabs" id="filterTabs">
                 <button class="filter-tab active" data-filter="all">全部</button>
-                <button class="filter-tab" data-filter="fresh">清新</button>
-                <button class="filter-tab" data-filter="active">活泼</button>
-                <button class="filter-tab" data-filter="humor">幽默</button>
-                <button class="filter-tab" data-filter="professional">专业</button>
-                <button class="filter-tab" data-filter="cozy">温馨</button>
-                <button class="filter-tab" data-filter="relaxed">松弛</button>
-                <button class="filter-tab" data-filter="healing">治愈</button>
-                <button class="filter-tab" data-filter="luxurious">高端</button>
-                <button class="filter-tab" data-filter="cool">酷炫</button>
-                <button class="filter-tab" data-filter="romantic">浪漫</button>
+                <button class="filter-tab" data-filter="人物写实">人物写实</button>
+                <button class="filter-tab" data-filter="场景写实">场景写实</button>
+                <button class="filter-tab" data-filter="动漫图">动漫图</button>
+                <button class="filter-tab" data-filter="信息图">信息图</button>
+                <button class="filter-tab" data-filter="插画图">插画图</button>
+                <button class="filter-tab" data-filter="海报图">海报图</button>
+                <button class="filter-tab" data-filter="创意图">创意图</button>
             </div>
         </div>
     </div>
@@ -427,13 +426,7 @@
             </div>
             <div class="modal-body">
                 <!-- List Tab -->
-                <div id="listTab">
-                    <div class="admin-list-header">
-                        <span id="adminListCount">共 0 个提示词</span>
-                        <button class="btn btn-secondary" onclick="exportPromptsForCode()">📋 导出代码</button>
-                    </div>
-                    <div class="admin-list" id="adminList"></div>
-                </div>
+                <div id="listTab"><div class="admin-list" id="adminList"></div></div>
                 <!-- Add Tab -->
                 <div id="addTab" style="display:none;">
                     <form id="addForm">
@@ -456,11 +449,10 @@
                                 <label>情绪氛围</label>
                                 <select id="addCategory">
                                     <option value="fresh">清新</option><option value="active">活泼</option>
-                                    <option value="simple">简约</option><option value="professional">专业</option>
-                                    <option value="cozy">温馨</option><option value="vintage">复古</option>
-                                    <option value="healing">治愈</option><option value="luxurious">高级</option>
+                                    <option value="humor">幽默</option><option value="professional">专业</option>
+                                    <option value="cozy">温馨</option><option value="relaxed">松弛</option>
+                                    <option value="healing">治愈</option><option value="luxurious">高端</option>
                                     <option value="cool">酷炫</option><option value="romantic">浪漫</option>
-                                    <option value="artistic">文艺</option>
                                 </select>
                             </div>
                         </div>
@@ -470,7 +462,7 @@
                                 <select id="addImageType">
                                     <option value="人物写实">人物写实</option><option value="场景写实">场景写实</option>
                                     <option value="动漫图">动漫图</option><option value="信息图">信息图</option>
-                                    <option value="手绘图">手绘图</option><option value="海报图">海报图</option>
+                                    <option value="插画图">插画图</option><option value="海报图">海报图</option>
                                     <option value="创意图">创意图</option>
                                 </select>
                             </div>
@@ -487,10 +479,10 @@
                                 <option value="教育">教育</option><option value="金融">金融</option>
                                 <option value="旅游">旅游</option><option value="家装">家装</option>
                                 <option value="电商">电商</option><option value="快消">快消</option>
-                                <option value="美妆">美妆</option><option value="医药">医药</option>
+                                <option value="美妆">美妆</option><option value="医美">医美</option>
+                                <option value="汽车">汽车</option><option value="房产">房产</option>
                                 <option value="娱乐">娱乐</option><option value="资讯">资讯</option>
-                                <option value="科技">科技</option><option value="商务">商务</option>
-                                <option value="生活服务">生活服务</option>
+                                <option value="科技">科技</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -550,11 +542,10 @@
                                 <label>情绪氛围</label>
                                 <select id="editCategory">
                                     <option value="fresh">清新</option><option value="active">活泼</option>
-                                    <option value="simple">简约</option><option value="professional">专业</option>
-                                    <option value="cozy">温馨</option><option value="vintage">复古</option>
-                                    <option value="healing">治愈</option><option value="luxurious">高级</option>
+                                    <option value="humor">幽默</option><option value="professional">专业</option>
+                                    <option value="cozy">温馨</option><option value="relaxed">松弛</option>
+                                    <option value="healing">治愈</option><option value="luxurious">高端</option>
                                     <option value="cool">酷炫</option><option value="romantic">浪漫</option>
-                                    <option value="artistic">文艺</option>
                                 </select>
                             </div>
                         </div>
@@ -564,7 +555,7 @@
                                 <select id="editImageType">
                                     <option value="人物写实">人物写实</option><option value="场景写实">场景写实</option>
                                     <option value="动漫图">动漫图</option><option value="信息图">信息图</option>
-                                    <option value="手绘图">手绘图</option><option value="海报图">海报图</option>
+                                    <option value="插画图">插画图</option><option value="海报图">海报图</option>
                                     <option value="创意图">创意图</option>
                                 </select>
                             </div>
@@ -581,10 +572,10 @@
                                 <option value="教育">教育</option><option value="金融">金融</option>
                                 <option value="旅游">旅游</option><option value="家装">家装</option>
                                 <option value="电商">电商</option><option value="快消">快消</option>
-                                <option value="美妆">美妆</option><option value="医药">医药</option>
+                                <option value="美妆">美妆</option><option value="医美">医美</option>
+                                <option value="汽车">汽车</option><option value="房产">房产</option>
                                 <option value="娱乐">娱乐</option><option value="资讯">资讯</option>
-                                <option value="科技">科技</option><option value="商务">商务</option>
-                                <option value="生活服务">生活服务</option>
+                                <option value="科技">科技</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -624,33 +615,131 @@
         </div>
     </div>
 
-    <script src="prompts.js?v=1"></script>
     <script>
         // AI Configuration
         const AI_CONFIG = {
             provider: 'deepseek',
             apiKey: 'sk-a378d1bc659f458a95f2c15c46fc0ad3',
             model: 'deepseek-chat',
-            baseUrl: 'https://api.deepseek.com/v1',
-            prompts: {
-                generateTags: `你是一个AI绘图标签专家。根据用户提供的提示词，生成5-8个相关的中文标签。
-标签要简洁、有吸引力、适合作为设计平台的标签。
-直接返回标签，用逗号分隔，不需要解释。`,
-                optimizePrompt: `你是一个AI绘图提示词优化专家。将用户提供的提示词进行结构化精简：
-1. 保留核心关键词和风格描述
-2. 去除冗余词汇和重复内容
-3. 用中文返回精炼的提示词
-直接返回优化结果，不需要解释。`
-            }
+            baseUrl: 'https://api.deepseek.com/v1'
         };
 
         const CATEGORY_NAMES = {
-            fresh: '清新', active: '活泼', simple: '简约', professional: '专业',
-            cozy: '温馨', vintage: '复古', healing: '治愈', luxurious: '高级',
-            cool: '酷炫', romantic: '浪漫', artistic: '文艺'
+            fresh: '清新', active: '活泼', humor: '幽默', professional: '专业',
+            cozy: '温馨', relaxed: '松弛', healing: '治愈', luxurious: '高端',
+            cool: '酷炫', romantic: '浪漫'
         };
 
-        
+        const SAMPLE_PROMPTS = [
+            {
+                id: 1, title: "赛博朋克都市夜景", category: "cool", imageType: "场景写实",
+                image: "https://images.unsplash.com/photo-1480796927426-f609979314bd?w=800",
+                imageWidth: 800, imageHeight: 533, source: "摄影师阿伟", industry: "游戏",
+                clickRate: "8.2%", rating: 5, likes: 234, likedByMe: false,
+                tags: ["夜景", "霓虹", "未来城市", "赛博朋克"],
+                text: "Cyberpunk cityscape at night, neon-lit skyscrapers, rain-soaked streets, futuristic vehicles, holographic advertisements, cinematic lighting, shot on Sony A7R IV, 35mm lens",
+                textOptimized: "赛博朋克夜景, 霓虹灯高楼, 雨天街道, 科幻车辆, 全息广告, 电影光效"
+            },
+            {
+                id: 2, title: "宫崎骏风夏日乡村", category: "healing", imageType: "动漫图",
+                image: "https://images.unsplash.com/photo-1528164344705-47542687000d?w=800",
+                imageWidth: 800, imageHeight: 1200, source: "动画师小雪", industry: "教育",
+                clickRate: "9.1%", rating: 5, likes: 456, likedByMe: false,
+                tags: ["吉卜力", "夏天", "乡村", "治愈"],
+                text: "Studio Ghibli style, peaceful countryside in summer, traditional Japanese house, rice fields, warm golden hour lighting, floating fireflies, detailed background art",
+                textOptimized: "吉卜力风格, 宁静夏日乡村, 传统日式房屋, 稻田, 黄金时段光, 萤火虫"
+            },
+            {
+                id: 3, title: "未来数字少女", category: "luxurious", imageType: "人物写实",
+                image: "https://images.unsplash.com/photo-1535378620166-273708d44e4c?w=800",
+                imageWidth: 800, imageHeight: 1067, source: "数字艺术家K", industry: "网服",
+                clickRate: "7.5%", rating: 4, likes: 189, likedByMe: false,
+                tags: ["数字人", "科幻", "未来感"],
+                text: "Digital art portrait of a futuristic girl, holographic accessories, flowing silver hair, iridescent eyes, cyberpunk fashion, glowing circuits on skin, ethereal glow, ultra detailed",
+                textOptimized: "未来感数字少女, 全息配饰, 银色飘发, 虹彩眼眸, 赛博朋克装束, 发光电路纹身"
+            },
+            {
+                id: 4, title: "清新水果海报", category: "fresh", imageType: "海报图",
+                image: "https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=800",
+                imageWidth: 800, imageHeight: 1067, source: "设计师小林", industry: "快消",
+                clickRate: "6.3%", rating: 4, likes: 98, likedByMe: false,
+                tags: ["水果", "清新", "海报", "夏天"],
+                text: "Fresh fruit arrangement on clean white background, tropical fruits, watermelon pineapple mango, soft natural lighting, commercial photography style, high resolution",
+                textOptimized: "新鲜水果拼盘, 热带水果, 西瓜菠萝芒果, 简洁白色背景, 商业摄影风格"
+            },
+            {
+                id: 5, title: "复古咖啡馆时光", category: "cozy", imageType: "场景写实",
+                image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800",
+                imageWidth: 800, imageHeight: 533, source: "摄影师老王", industry: "餐饮",
+                clickRate: "8.4%", rating: 5, likes: 312, likedByMe: false,
+                tags: ["咖啡", "复古", "温馨", "文艺"],
+                text: "Vintage coffee shop interior, warm tungsten lighting, exposed brick walls, wooden furniture, steam rising from coffee cups, shot on Kodak Portra 400, film grain visible",
+                textOptimized: "复古咖啡馆内景, 暖色灯光, 裸露砖墙, 木质家具, 咖啡蒸汽袅袅, 胶片质感"
+            },
+            {
+                id: 6, title: "金融数据信息图", category: "professional", imageType: "信息图",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
+                imageWidth: 800, imageHeight: 600, source: "数据可视化师", industry: "金融",
+                clickRate: "5.8%", rating: 3, likes: 67, likedByMe: false,
+                tags: ["数据", "图表", "专业", "金融"],
+                text: "Professional financial infographic, clean data visualization, charts and graphs, blue and white color scheme, corporate presentation style, 8k resolution",
+                textOptimized: "专业金融信息图, 清晰数据可视化, 图表展示, 蓝白配色, 企业演示风格"
+            },
+            {
+                id: 7, title: "浪漫樱花恋人", category: "romantic", imageType: "人物写实",
+                image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800",
+                imageWidth: 800, imageHeight: 1200, source: "摄影师春天", industry: "摄影",
+                clickRate: "9.4%", rating: 5, likes: 523, likedByMe: false,
+                tags: ["樱花", "浪漫", "情侣", "春天"],
+                text: "Romantic couple portrait under cherry blossom tree, soft pink petals falling, warm sunset lighting, dreamy atmosphere, shallow depth of field, shot on Canon 85mm",
+                textOptimized: "樱花树下的浪漫情侣, 粉色花瓣飘落, 温暖日落光, 梦幻氛围, 浅景深"
+            },
+            {
+                id: 8, title: "幽默表情包素材", category: "humor", imageType: "插画图",
+                image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800",
+                imageWidth: 800, imageHeight: 800, source: "插画师阿呆", industry: "网服",
+                clickRate: "7.2%", rating: 4, likes: 278, likedByMe: false,
+                tags: ["表情包", "可爱", "幽默", "卡通"],
+                text: "Cute funny character illustration, exaggerated expressions, pastel colors, kawaii style, simple clean background, suitable for sticker packs and memes",
+                textOptimized: "可爱搞笑角色插画, 夸张表情, 粉彩配色, 卡哇伊风格, 简洁背景, 适合表情包"
+            },
+            {
+                id: 9, title: "松弛周末下午茶", category: "relaxed", imageType: "场景写实",
+                image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800",
+                imageWidth: 800, imageHeight: 533, source: "生活方式博主", industry: "电商",
+                clickRate: "8.1%", rating: 5, likes: 345, likedByMe: false,
+                tags: ["下午茶", "松弛", "生活", "精致"],
+                text: "Laid-back weekend afternoon tea scene, elegant pastries and scones, floral arrangements, natural window light, lifestyle photography, minimal styling",
+                textOptimized: "松弛周末下午茶, 精致糕点司康, 花卉摆设, 自然窗光, 生活方式摄影"
+            },
+            {
+                id: 10, title: "儿童创意涂鸦", category: "active", imageType: "插画图",
+                image: "https://images.unsplash.com/photo-1512149177596-f817c7ef5d4c?w=800",
+                imageWidth: 800, imageHeight: 1067, source: "儿童插画师", industry: "教育",
+                clickRate: "6.9%", rating: 4, likes: 156, likedByMe: false,
+                tags: ["儿童", "涂鸦", "创意", "活泼"],
+                text: "Colorful children's crayon drawing style, imaginative scenes, bright bold colors, hand-drawn aesthetic, playful and energetic, suitable for kids education",
+                textOptimized: "色彩斑斓儿童蜡笔画, 想象力场景, 明亮色彩, 手绘质感, 活泼有活力"
+            },
+            {
+                id: 11, title: "高端汽车特写", category: "luxurious", imageType: "场景写实",
+                image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800",
+                imageWidth: 800, imageHeight: 533, source: "汽车摄影师", industry: "汽车",
+                clickRate: "7.8%", rating: 5, likes: 234, likedByMe: false,
+                tags: ["汽车", "高端", "炫酷", "豪车"],
+                text: "Luxury sports car close-up, sleek design lines, reflective paint finish, dramatic lighting, automotive photography, studio background, 8k resolution",
+                textOptimized: "豪华跑车特写, 流畅设计线条, 反射漆面, 戏剧光效, 汽车摄影, 工作室背景"
+            },
+            {
+                id: 12, title: "旅游风景大片", category: "fresh", imageType: "场景写实",
+                image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800",
+                imageWidth: 800, imageHeight: 533, source: "旅行摄影师", industry: "旅游",
+                clickRate: "9.0%", rating: 5, likes: 678, likedByMe: false,
+                tags: ["海滩", "度假", "风景", "夏天"],
+                text: "Tropical beach paradise, crystal clear turquoise water, white sandy beach, coconut trees, golden hour lighting, travel photography, national geographic style",
+                textOptimized: "热带海滩天堂, 碧绿透明海水, 白色沙滩, 椰子树, 黄金时段, 国家地理风格"
+            }
+        ];
 
         let prompts = [];
         let currentFilter = 'all';
@@ -700,14 +789,14 @@
             const empty = document.getElementById('emptyState');
 
             const filtered = prompts.filter(p => {
-                const matchFilter = currentFilter === 'all' || p.category === currentFilter;
+                const matchFilter = currentFilter === 'all' || p.imageType === currentFilter;
                 const q = searchQuery.toLowerCase();
                 const matchSearch = !q ||
                     p.title.toLowerCase().includes(q) ||
                     (p.tags && p.tags.some(t => t.toLowerCase().includes(q))) ||
                     (p.industry && p.industry.toLowerCase().includes(q)) ||
                     (p.source && p.source.toLowerCase().includes(q)) ||
-                    (p.imageType && p.imageType.toLowerCase().includes(q));
+                    (p.category && p.category.toLowerCase().includes(q));
                 return matchFilter && matchSearch;
             });
 
@@ -719,11 +808,10 @@
             empty.classList.remove('show');
 
             grid.innerHTML = filtered.map(p => {
-                const imgHeight = Math.round((p.imageHeight / p.imageWidth) * 280);
                 return `
                 <article class="prompt-card" data-id="${p.id}">
                     <img class="card-image" src="${p.image}" alt="${p.title}"
-                         onerror="this.src='https://picsum.photos/280/${imgHeight}?grayscale'" style="height:${imgHeight}px;object-fit:cover;">
+                         onerror="this.src='https://picsum.photos/280/200?grayscale'">
                     <div class="card-body">
                         <div class="card-title-row">
                             <h3 class="card-title">${p.title}</h3>
@@ -904,7 +992,6 @@
             document.getElementById('adminModal').classList.add('show');
             switchTab('list');
             renderAdminList();
-            updateAdminListCount();
         }
 
         function closeAdminModal() {
@@ -920,41 +1007,6 @@
                     editPrompt(currentDetailId);
                 }
             }, 100);
-        }
-
-        function exportPromptsForCode() {
-            const esc = s => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, ' ');
-            const lines = prompts.map(p => {
-                const parts = [];
-                parts.push(`id: ${p.id}`);
-                parts.push(`title: "${esc(p.title)}"`);
-                parts.push(`category: "${esc(p.category)}"`);
-                parts.push(`imageType: "${esc(p.imageType)}"`);
-                parts.push(`image: "${esc(p.image)}"`);
-                parts.push(`imageWidth: ${p.imageWidth || 800}`);
-                parts.push(`imageHeight: ${p.imageHeight || 600}`);
-                parts.push(`source: "${esc(p.source)}"`);
-                parts.push(`industry: "${esc(p.industry)}"`);
-                parts.push(`clickRate: "${esc(p.clickRate)}"`);
-                parts.push(`rating: ${p.rating || 0}`);
-                parts.push(`likes: ${p.likes || 0}`);
-                parts.push(`likedByMe: ${p.likedByMe ? 'true' : 'false'}`);
-                parts.push(`tags: ${JSON.stringify(p.tags || [])}`);
-                parts.push(`text: "${esc(p.text)}"`);
-                parts.push(`textOptimized: "${esc(p.textOptimized)}"`);
-                if (p.createdAt) parts.push(`createdAt: ${p.createdAt}`);
-                return '{ ' + parts.join(', ') + ' }';
-            });
-            const arrStr = 'const SAMPLE_PROMPTS = [\n            ' + lines.join(',\n            ') + '\n        ];';
-            navigator.clipboard.writeText(arrStr).then(() => {
-                showToast('已复制 ' + prompts.length + ' 个提示词到剪贴板');
-            }).catch(() => {
-                showToast('复制失败，请手动复制');
-            });
-        }
-
-        function updateAdminListCount() {
-            document.getElementById('adminListCount').textContent = '共 ' + prompts.length + ' 个提示词';
         }
 
         function switchTab(tab) {
@@ -977,7 +1029,7 @@
                     <img src="${p.image}" alt="" onerror="this.src='https://picsum.photos/50/35?grayscale'">
                     <div class="admin-item-info">
                         <div class="admin-item-title">${p.title}</div>
-                        <div class="admin-item-meta">${CATEGORY_NAMES[p.category]} · ${p.source || '-'} · ❤️${p.likes || 0}</div>
+                        <div class="admin-item-meta">${p.imageType} · ${p.source || '-'} · ❤️${p.likes || 0}</div>
                     </div>
                     <button class="btn btn-secondary" onclick="event.stopPropagation();editPrompt(${p.id})">编辑</button>
                 </div>`).join('');
@@ -1116,7 +1168,7 @@
 
             try {
                 const messages = [
-                    { role: 'system', content: AI_CONFIG.prompts.generateTags },
+                    { role: 'system', content: '你是一个AI绘图标签专家。根据用户提供的提示词，生成5-8个相关的中文标签。标签要简洁、有吸引力、适合作为小红书或设计平台的标签。直接返回标签，用逗号分隔，不需要解释。' },
                     { role: 'user', content: `根据这个提示词生成标签：${text}` }
                 ];
 
@@ -1147,7 +1199,7 @@
 
             try {
                 const messages = [
-                    { role: 'system', content: AI_CONFIG.prompts.optimizePrompt },
+                    { role: 'system', content: '你是一个AI绘图提示词优化专家。将用户提供的提示词进行结构化精简，保留核心关键词和风格描述，去除冗余词汇，生成更精炼、更适合AI绘图的提示词。用中文返回，直接返回优化后的提示词，不需要解释。' },
                     { role: 'user', content: `优化这个提示词：${text}` }
                 ];
 
@@ -1202,7 +1254,6 @@
                     showToast('添加成功');
                     switchTab('list');
                     renderAdminList();
-                    updateAdminListCount();
                 };
                 img.src = imgUrl;
             } else {
@@ -1216,7 +1267,6 @@
                 showToast('添加成功');
                 switchTab('list');
                 renderAdminList();
-                updateAdminListCount();
             }
         });
 
@@ -1247,7 +1297,6 @@
             showToast('保存成功');
             switchTab('list');
             renderAdminList();
-            updateAdminListCount();
         });
 
         document.getElementById('adminBtn').addEventListener('click', openAdminModal);
