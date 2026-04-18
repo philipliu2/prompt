@@ -686,18 +686,25 @@
             const likesMap = JSON.parse(likesStored);
 
             if (stored) {
-                prompts = JSON.parse(stored).map(p => ({
-                    ...p,
-                    likedByMe: likesMap[p.id] || false,
-                    likes: p.likes || 0
-                }));
+                try {
+                    prompts = JSON.parse(stored).map(p => ({
+                        ...p,
+                        likedByMe: likesMap[p.id] || false,
+                        likes: p.likes || 0
+                    }));
+                } catch (e) {
+                    console.error('Failed to parse stored prompts:', e);
+                    prompts = [];
+                }
             } else {
                 // Load from prompts.json
                 try {
-                    const res = await fetch('prompts.json?v=1');
+                    const res = await fetch('prompts.json?t=' + Date.now());
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
                     SAMPLE_PROMPTS = await res.json();
                     prompts = SAMPLE_PROMPTS.map(p => ({...p, likedByMe: false}));
                     savePrompts();
+                    console.log('Loaded', prompts.length, 'prompts from prompts.json');
                 } catch (e) {
                     console.error('Failed to load prompts:', e);
                     prompts = [];
